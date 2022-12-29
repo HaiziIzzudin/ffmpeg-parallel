@@ -33,7 +33,7 @@ print(workerSSArr,wt)
 fpthOut1 = (fpth[:-4] + "_AV1-1.mp4")
 fpthOut2 = (fpth[:-4] + "_AV1-2.mp4")
 fpthOut3 = (fpth[:-4] + "_AV1-3.mp4")
-print("\n\nProcessed video will be named as follows:\n" + fpthOut1 + "\n" + fpthOut2 + "\n" + fpthOut3)
+print("\n\nProcessed video will be named as following:\n" + fpthOut1 + "\n" + fpthOut2 + "\n" + fpthOut3)
 fpthOutArr = [fpthOut1,fpthOut2,fpthOut3]
 
 ## now we can invoke command ffmpeg (in new terminal possibly)
