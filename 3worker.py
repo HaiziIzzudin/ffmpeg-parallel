@@ -1,4 +1,4 @@
-import subprocess, json, datetime, os
+import subprocess, json, datetime, os, time
 from os import system, name
 
 # FUNCTIONS TO CLEAR TERMINAL
@@ -23,12 +23,9 @@ print("Total duration in seconds is "+ str(dur))
 w1ss = str(datetime.timedelta(seconds = (0/3)*dur))
 w2ss = str(datetime.timedelta(seconds = (1/3)*dur))
 w3ss = str(datetime.timedelta(seconds = (2/3)*dur))
-w1tt = str(datetime.timedelta(seconds = (1/3)*dur))
-w2tt = str(datetime.timedelta(seconds = (2/3)*dur))
-w3tt = str(datetime.timedelta(seconds = (3/3)*dur))
+wt = str(datetime.timedelta(seconds = (1/3)*dur))
 workerSSArr = [w1ss,w2ss,w3ss]
-workerTTArr = [w1tt,w2tt,w3tt]
-print(workerSSArr,workerTTArr)
+print(workerSSArr,wt)
 
 # invoke new ffmpeg process with its own ffmpeg commands
 
@@ -52,13 +49,43 @@ if name == 'nt': # for windows
     for x in workerFilenameNTKnl:
         z += 1
         f = open(x, "a")
-        f.write("ffmpeg -ss "+workerSSArr[z]+" -i "+ fpth + ffmpegCMD + workerTTArr[z] +" "+ fpthOutArr[z])
+        f.write("ffmpeg -ss "+workerSSArr[z]+" -i "+ fpth + ffmpegCMD + wt +" "+ fpthOutArr[z])
         
 else: # for mac and linux(here, os.name is 'posix')
     for x in workerFilenamePosix:
         z += 1
         f = open(x, "a")
-        f.write("ffmpeg -ss "+workerSSArr[z]+" -i "+ fpth + ffmpegCMD + workerTTArr[z] +" "+ fpthOutArr[z])
+        f.write("ffmpeg -ss "+workerSSArr[z]+" -i "+ fpth + ffmpegCMD + wt +" "+ fpthOutArr[z])
     subprocess.Popen('konsole -e bash ./worker1.sh', shell=True)
     subprocess.Popen('konsole -e bash ./worker2.sh', shell=True)
     subprocess.Popen('konsole -e bash ./worker3.sh', shell=True)
+
+time.sleep(5)
+
+# setting process ID for every ffmpeg workers
+processID = subprocess.check_output('pidof ffmpeg', shell=True).split()
+
+print(processID)
+
+p = int(processID[0])
+q = int(processID[1])
+r = int(processID[2])
+
+print("ffmpeg has been detected to run on these process ID:")
+print(p,q,r)
+
+affinityMask1 = {0,5,10,7}
+affinityMask2 = {4,9,6,3}
+affinityMask3 = {8,1,2,11}
+
+os.sched_setaffinity(p, affinityMask1)
+os.sched_setaffinity(q, affinityMask2)
+os.sched_setaffinity(r, affinityMask3)
+
+affinityForP = os.sched_getaffinity(p)
+affinityForQ = os.sched_getaffinity(q)
+affinityForR = os.sched_getaffinity(r)
+
+print("Affinity has been set!\nNow process P is running on thread ", affinityForP)
+print("Process Q is running on thread ", affinityForQ)
+print("Process R is running on thread ", affinityForR)
