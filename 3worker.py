@@ -23,13 +23,17 @@ ffprobe_data = json.loads(out)
 dur = float(ffprobe_data["format"]["duration"])
 print("Total duration in seconds is "+ str(dur))
 
+
 # now, find its HH:MM:SS for each worker
 w1ss = str(datetime.timedelta(seconds = (0/3)*dur))
 w2ss = str(datetime.timedelta(seconds = (1/3)*dur))
 w3ss = str(datetime.timedelta(seconds = (2/3)*dur))
+
 wt = str(datetime.timedelta(seconds = (1/3)*dur))
+
 workerSSArr = [w1ss,w2ss,w3ss]
 print(workerSSArr,wt)
+
 
 # invoke new ffmpeg process with its own ffmpeg commands
 
