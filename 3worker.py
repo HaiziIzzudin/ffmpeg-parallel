@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: ascii -*-
 import subprocess
 import json
 import datetime
