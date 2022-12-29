@@ -56,9 +56,11 @@ else: # for mac and linux(here, os.name is 'posix')
         z += 1
         f = open(x, "a")
         f.write("ffmpeg -ss "+workerSSArr[z]+" -i "+ fpth + ffmpegCMD + wt +" "+ fpthOutArr[z])
-    subprocess.Popen('konsole -e bash ./worker1.sh', shell=True)
-    subprocess.Popen('konsole -e bash ./worker2.sh', shell=True)
-    subprocess.Popen('konsole -e bash ./worker3.sh', shell=True)
+    subprocess.Popen('konsole --noclose -e bash ./worker1.sh', shell=True)
+    time.sleep(0.5)
+    subprocess.Popen('konsole --noclose -e bash ./worker2.sh', shell=True)
+    time.sleep(0.5)
+    subprocess.Popen('konsole --noclose -e bash ./worker3.sh', shell=True)
 
 time.sleep(5)
 
