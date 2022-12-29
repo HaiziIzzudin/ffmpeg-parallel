@@ -43,13 +43,11 @@ print("Total duration in seconds is " + str(duration))
 
 # now, find its HH:MM:SS for each worker (by fraction)
 w1ss = str(datetime.timedelta(seconds = (0/3) * duration))
-w2ss = str(datetime.timedelta(seconds = (1/3) * duration))
+w2sT = str(datetime.timedelta(seconds = (1/3) * duration))
 w3ss = str(datetime.timedelta(seconds = (2/3) * duration))
 
-wt   = str(datetime.timedelta(seconds = (1/3) * duration))
-
-workerSSArr = [w1ss,w2ss,w3ss]
-print(workerSSArr,wt)
+workerSSArr = [w1ss,w2sT,w3ss]
+print("\n3 start point of this media is",workerSSArr,"\nDuration from start point is",w2sT)
 
 
 
