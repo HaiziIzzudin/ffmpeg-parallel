@@ -33,18 +33,18 @@ videoPath = input("Drag video file into this program: ")
 out = subprocess.check_output(["ffprobe", "-v", "quiet", "-show_format", "-print_format", "json", videoPath])
 ffprobe_data = json.loads(out)
 duration = float(ffprobe_data["format"]["duration"])
-print("Total duration in seconds is "+ str(duration))
+print("Total duration in seconds is " + str(duration))
 
 
 
 
 
-# now, find its HH:MM:SS for each worker
-w1ss = str(datetime.timedelta(seconds = (0/3) * dur))
-w2ss = str(datetime.timedelta(seconds = (1/3) * dur))
-w3ss = str(datetime.timedelta(seconds = (2/3) * dur))
+# now, find its HH:MM:SS for each worker (by fraction)
+w1ss = str(datetime.timedelta(seconds = (0/3) * duration))
+w2ss = str(datetime.timedelta(seconds = (1/3) * duration))
+w3ss = str(datetime.timedelta(seconds = (2/3) * duration))
 
-wt = str(datetime.timedelta(seconds = (1/3)*dur))
+wt   = str(datetime.timedelta(seconds = (1/3) * duration))
 
 workerSSArr = [w1ss,w2ss,w3ss]
 print(workerSSArr,wt)
