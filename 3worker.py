@@ -43,9 +43,8 @@ fpthOutArr = [fpthOut1,fpthOut2,fpthOut3]
 
 ### filename has to change according to operating system
 workerFilenameNTKnl = ["worker1.bat","worker2.bat","worker3.bat"]
-#workerFilenamePosix = ["worker1.sh","worker2.sh","worker3.sh"]
-workerFilenamePy = ["worker1.py","worker2.py","worker3.py"]
-ffmpegCMD = " -c:v libsvtav1 -preset 7 -b:v 2.5k -c:a aac -b:a 192k -t "
+workerFilenamePosix = ["worker1.sh","worker2.sh","worker3.sh"]
+ffmpegCMD = " -c:v libsvtav1 -preset 7 -b:v 2.5M -c:a aac -b:a 192k -t "
 
 # condition to create worker source file
 z = -1
@@ -55,9 +54,11 @@ if name == 'nt': # for windows
         f = open(x, "a")
         f.write("ffmpeg -ss "+workerSSArr[z]+" -i "+ fpth + ffmpegCMD + workerTTArr[z] +" "+ fpthOutArr[z])
         
-        
 else: # for mac and linux(here, os.name is 'posix')
-    for x in workerFilenamePy:
+    for x in workerFilenamePosix:
         z += 1
         f = open(x, "a")
         f.write("ffmpeg -ss "+workerSSArr[z]+" -i "+ fpth + ffmpegCMD + workerTTArr[z] +" "+ fpthOutArr[z])
+    subprocess.Popen('konsole -e bash ./worker1.sh', shell=True)
+    subprocess.Popen('konsole -e bash ./worker2.sh', shell=True)
+    subprocess.Popen('konsole -e bash ./worker3.sh', shell=True)
