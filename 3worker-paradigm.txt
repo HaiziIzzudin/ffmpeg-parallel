@@ -10,3 +10,19 @@ Therefore, this paradigm is discarded.
 I have a new paradign idea, which is called WORKFLOW
 
 A one python script will be made. This going to be the base.
+Where the remaining of the program will be downloaded online, 
+and compiled and executed on-the-fly.
+A cache file will be made.
+This will hold all the values and variable that made,
+then using import script, we will import some of the variable to the main flow script.
+At final stage, a python command will appear that will set cpu affinity.
+
+Mostly the script will be the same and will be based from the failed one.
+Several thoughts will go into it and will be polished afterwards.
+
+Like and sibscribe (star) if you like this kind of project, 
+and let me know what script you want me to write next.
+
+BTW, this is my first project that I wrote using Python.
+I'm propud with the quality that came out.
+Hopefully I can study more about Python language and know how to write better code.
