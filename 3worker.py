@@ -1,4 +1,8 @@
-import subprocess, json, datetime, os, time
+import subprocess
+import json
+import datetime
+import os
+import time
 from os import system, name
 
 # FUNCTIONS TO CLEAR TERMINAL
@@ -8,7 +12,7 @@ def clear():
     else: # for mac and linux(here, os.name is 'posix')
         _ = system('clear')
 
-clear();
+clear()
 
 # get file input
 fpth = input("Drag video file into this program: ")
