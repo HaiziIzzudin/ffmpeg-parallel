@@ -61,8 +61,10 @@ print("\n3 start point of this media is",workerSSArr,"\nDuration from start poin
 Out1 = (videoPath[:-4] + "_AV1-1.mp4")
 Out2 = (videoPath[:-4] + "_AV1-2.mp4")
 Out3 = (videoPath[:-4] + "_AV1-3.mp4")
-print("\nProcessed video will be named as following:\n" + fpthOut1 + "\n" + fpthOut2 + "\n" + fpthOut3)
 OutAr = [Out1,Out2,Out3]
+
+print("\nProcessed video will be named as following:\n" + OutAr[1] + "\n" + OutAr[2] + "\n" + OutAr[3])
+
 
 
 ## Command template
