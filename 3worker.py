@@ -47,7 +47,7 @@ w2sT = str(datetime.timedelta(seconds = (1/3) * duration))
 w3ss = str(datetime.timedelta(seconds = (2/3) * duration))
 
 SSAr = [w1ss,w2sT,w3ss]
-print("\n3 start point of this media is",SSAr,"\nDuration from start point is",w2sT)
+print("\n\n3 start point of this media is",SSAr,"\nDuration from start point is",w2sT)
 
 
 
