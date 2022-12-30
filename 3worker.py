@@ -73,18 +73,23 @@ b = " -i "
 c = " -c:v libsvtav1 -b:v 2.5M -preset 7 -c:a aac -b:a 192k -t "
 d = " "
 g = -1
+n = "\n"
 
 
 
-## create temporary worker file
+## create temporary worker file and runner file
 
 if name == 'nt': # for windows
-        wFile = ["w1.bat","w2.bat","w3.bat"]
+        wFile = ["w1.bat","w2.bat","w3.bat","runner.bat"]
 else:            # for mac and linux
-        wFile = ["w1.sh","w2.sh","w3.sh"]
+        wFile = ["w1.sh","w2.sh","w3.sh","runner.sh"]
 
 for e in wFile:
     g += 1
     f = open( e , "a")
     f.write(a + OutAr[g] + b + videoPath + c + w2sT + d + OutAr[g])
     f.close()
+
+f = open(wFile[3] , "a")
+f.write(wFile[0],n,wFile[1],n,wFile[2])
+f.close()
