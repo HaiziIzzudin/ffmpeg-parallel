@@ -63,7 +63,7 @@ Out2 = (videoPath[:-4] + "_AV1-2.mp4")
 Out3 = (videoPath[:-4] + "_AV1-3.mp4")
 OutAr = [Out1,Out2,Out3]
 
-print("\nProcessed video will be named as following:\n",OutAr[1],"\n",OutAr[2],"\n",OutAr[3])
+print("\nProcessed video will be named as following:\n",OutAr[0],"\n",OutAr[1],"\n",OutAr[2])
 
 
 
