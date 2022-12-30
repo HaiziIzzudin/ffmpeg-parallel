@@ -46,7 +46,7 @@ w1ss = str(datetime.timedelta(seconds = (0/3) * duration))
 w2sT = str(datetime.timedelta(seconds = (1/3) * duration))
 w3ss = str(datetime.timedelta(seconds = (2/3) * duration))
 
-workerSSArr = [w1ss,w2sT,w3ss]
+SSAr = [w1ss,w2sT,w3ss]
 print("\n3 start point of this media is",workerSSArr,"\nDuration from start point is",w2sT)
 
 
@@ -58,17 +58,17 @@ print("\n3 start point of this media is",workerSSArr,"\nDuration from start poin
 
 
 ## but before that, we need to configure outputName
-fpthOut1 = (videoPath[:-4] + "_AV1-1.mp4")
-fpthOut2 = (videoPath[:-4] + "_AV1-2.mp4")
-fpthOut3 = (videoPath[:-4] + "_AV1-3.mp4")
+Out1 = (videoPath[:-4] + "_AV1-1.mp4")
+Out2 = (videoPath[:-4] + "_AV1-2.mp4")
+Out3 = (videoPath[:-4] + "_AV1-3.mp4")
 print("\nProcessed video will be named as following:\n" + fpthOut1 + "\n" + fpthOut2 + "\n" + fpthOut3)
-fpthOutArr = [fpthOut1,fpthOut2,fpthOut3]
+OutAr = [Out1,Out2,Out3]
 
 
 ## Command template
 a = "ffmpeg -ss "
-b = "-i "
-c = "-c:v libsvtav1 -b:v 2.5M -preset 7 -c:a aac -b:a 192k -t "
+b = " -i "
+c = " -c:v libsvtav1 -b:v 2.5M -preset 7 -c:a aac -b:a 192k -t "
 d = " "
 
 
@@ -82,5 +82,5 @@ else:            # for mac and linux
 
 for x in wFile:
     f = open( x , "a")
-    f.write(a + w1ss + b + videoPath + c + w2sT + d + fpthOut1)
+    f.write(a + OutAr[x] + b + videoPath + c + w2sT + d + OutAr[x])
     f.close()
