@@ -176,7 +176,6 @@ os.remove(wRunner)
 # MESSAGE DONE PROCESSING
 print("\n\nExecution done!")
 if name == 'nt':
-    print("Do check task manager if cpu affinity masking is set.\n\n")
+    print("Do double check CPU affinity in Task Manager.\n\n")
 else:
-    print(nn)
-
+    print("Do double check CPU by using command taskset -cp [PID].\n\n")
