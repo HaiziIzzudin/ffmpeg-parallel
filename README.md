@@ -10,7 +10,7 @@ This is a Python script where ffmpeg will split inputted video into 3 parts, and
 - pip, because you want to install some of other python module dependency
   - After installing pip, execute command below:
     ```
-    asasasasasasas
+    pip install psutil
     ```
 - If you going to use Windows, please install PowerShell version 6 or above.
 
