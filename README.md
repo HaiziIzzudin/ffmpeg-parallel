@@ -17,6 +17,7 @@ This script has been tailored to my machine. That's why I provide in script mode
 Some of the parameters that you can change is:
   - CPU Affinity allocation
   - Filename addition and extensions
+  - the FFmpeg command itself
   - LINUX ONLY: Terminal name (my script is written for Konsole, which is KDE desktop environment command prompt)
   
 Hopefully the next update I can eliminate some of the problem above.
