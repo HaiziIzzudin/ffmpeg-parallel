@@ -11,6 +11,16 @@ This is a Python script where ffmpeg will split inputted video into 3 parts, and
     ```
 - If you going to use Windows, please install PowerShell version 6 or above.
 
+## IMPORTANT NOTE
+This script has been tailored to my machine. That's why I provide in script mode, not executable mode. Since this script is editable and open source, go ahead and change some of the parameters inside the script to match what's spec on your machine.
+
+Some of the parameters that you can change is:
+  - CPU Affinity allocation
+  - Filename addition and extensions
+  - LINUX ONLY: Terminal name (my script is written for Konsole, which is KDE desktop environment command prompt)
+  
+Hopefully the next update I can eliminate some of the problem above.
+
 ## DOWNLOAD AND RUN SCRIPT
 ### Windows
 You MUST and HAVE to run this command inside powershell version 6 and above. The one shipped with Windows is version 5. Do get the latest PowerShell by invoking `winget install microsoft.powershell`, OR if you don't have winget, [download here](https://learn.microsoft.com/en-gb/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3#msi).
