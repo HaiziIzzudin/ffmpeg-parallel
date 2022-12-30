@@ -72,6 +72,7 @@ a = "ffmpeg -ss "
 b = " -i "
 c = " -c:v libsvtav1 -b:v 2.5M -preset 7 -c:a aac -b:a 192k -t "
 d = " "
+g = -1
 
 
 
@@ -83,6 +84,7 @@ else:            # for mac and linux
         wFile = ["w1.sh","w2.sh","w3.sh"]
 
 for e in wFile:
+    g += 1
     f = open( e , "a")
-    f.write(a + OutAr[e] + b + videoPath + c + w2sT + d + OutAr[e])
+    f.write(a + OutAr[g] + b + videoPath + c + w2sT + d + OutAr[g])
     f.close()
