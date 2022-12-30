@@ -1,5 +1,5 @@
-# ffmpeg-3worker
-Python script where ffmpeg will broke a video into 3 parts, and encode it to their own cpu affinity to avoid system crash.
+# Encode with 3 concurrent ffmpeg process instead of one!
+This is a Python script where ffmpeg will split inputted video into 3 parts, and encode it to their own cpu affinity SIMULTANEOUSLY to avoid system crash.
 
 ## REQUIREMENT / DEPENDENCIES
 - ffmpeg, MUST accessible thru PATH. Those who don't know how to install I will provide tutorial later.
