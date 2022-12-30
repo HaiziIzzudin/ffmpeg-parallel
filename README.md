@@ -1,3 +1,6 @@
+![image_2022-12-30_23-33-14](https://user-images.githubusercontent.com/79714350/210088270-1e48cc3e-e0f6-438e-9452-c44bb99dab54.png)
+
+
 # Encode with 3 concurrent ffmpeg process instead of one!
 This is a Python script where ffmpeg will split inputted video into 3 parts, and encode it to their own cpu affinity SIMULTANEOUSLY to avoid system crash.
 
