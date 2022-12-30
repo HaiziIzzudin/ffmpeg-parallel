@@ -4,10 +4,12 @@ import datetime
 import os
 import time
 import psutil
-import win32api
-import win32con
-import win32process
 from os import system, name
+
+if name == 'nt': # for windows
+    import win32api
+    import win32con
+    import win32process
 
 # FUNCTIONS COLLECTION
 def clear():
@@ -94,13 +96,18 @@ for e in wFile:
 i = -1
 j = open(wRunner , "a")
 for h in wFile:
-    j.write("start cmd /c " + h + "\n")
-    if i == 2:
-        break
+    if name == 'nt': # for windows
+        j.write("start cmd /c " + h + "\n")
+    else:            # for mac and linux
+        j.write("konsole -e bash ./" + h + "&\n")
 j.close()
 
 # RUN RUNNER --> W1,W2,W3
-subprocess.Popen('start cmd /c runner.bat',shell=True)
+if name == 'nt': # for windows
+    subprocess.Popen('start cmd /c runner.bat',shell=True)
+else:            # for mac and linux
+    subprocess.Popen('./runner.sh',shell=True)
+
 time.sleep(5)
 
 # DO CPU ASSIGNMENTS
@@ -124,34 +131,40 @@ PIDArr = [p,q,r]
 print(PIDArr)
 
 ## create var with its own affinity mask
-### POSIX
-#mask1 = {0,5,10,7}
-#mask2 = {4,9,6,3}
-#mask3 = {8,1,2,11}
-### NT
-mask1 = 1185
-mask2 = 600
-mask3 = 2310
+if name == 'nt': # for windows
+    mask1 = 1185
+    mask2 = 600
+    mask3 = 2310
+else:            # for mac and linux
+    mask1 = {0,5,10,7}
+    mask2 = {4,9,6,3}
+    mask3 = {8,1,2,11}
+
 AffArr = [mask1,mask2,mask3]
-print("\nTherefore uses NT format affinity masking:")
+print("\nTherefore uses "+ name +" format affinity masking:")
 print(AffArr)
 
 ## now set affinity to the PID ffmpeg
 u = -1
-### POSIX
-#os.sched_setaffinity(p, aff1)
-#os.sched_setaffinity(q, aff2)
-#os.sched_setaffinity(r, aff3)
-### NT
-for s in PIDArr:
-    u += 1
-    handle = win32api.OpenProcess(win32con.PROCESS_ALL_ACCESS, True, s)
-    win32process.SetProcessAffinityMask(handle, AffArr[u])
+if name == 'nt': # for windows
+    for s in PIDArr:
+        u += 1
+        handle = win32api.OpenProcess(win32con.PROCESS_ALL_ACCESS, True, s)
+        win32process.SetProcessAffinityMask(handle, AffArr[u])
+else:            # for mac and linux
+    for s in PIDArr:
+        u += 1
+        os.sched_setaffinity(s, AffArr[u])
 
-## get CPU affinity for each ffmpeg worker and print it.
-#affinityP = os.sched_getaffinity(p)
-#affinityQ = os.sched_getaffinity(q)
-#affinityR = os.sched_getaffinity(r)
+## get CPU affinity for each ffmpeg worker and print it (POSIX ONLY).
+if name == 'posix': # for windows
+    unixAffAr = [os.sched_getaffinity(p), os.sched_getaffinity(q), os.sched_getaffinity(r)]
+    print("\nAffinity set!")
+    x = -1
+    for w in PIDArr:
+        x += 1
+        y = unixAffAr[x]
+        print("FFmpeg PID "+ str(w) +" is running on thread "+ str(y))
 
 # DELETE RUNNER AND WORKER FILE
 for v in wFile:
@@ -159,4 +172,8 @@ for v in wFile:
 os.remove(wRunner)
 
 # MESSAGE DONE PROCESSING
-print("\n\nExecution done! Do check task manager if cpu affinity masking is set.\n\n")
+print("\n\nExecution done!")
+if name == 'nt':
+    print("Do check task manager if cpu affinity masking is set.\n\n")
+else:
+    print(nn)
