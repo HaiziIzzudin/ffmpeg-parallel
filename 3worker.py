@@ -106,7 +106,7 @@ j.close()
 if name == 'nt': # for windows
     subprocess.Popen('start cmd /c runner.bat',shell=True)
 else:            # for mac and linux
-    subprocess.Popen('./runner.sh',shell=True)
+    subprocess.Popen('chmod +x ./runner.sh; ./runner.sh',shell=True)
 
 time.sleep(5)
 
