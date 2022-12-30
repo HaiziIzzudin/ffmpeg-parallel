@@ -176,4 +176,4 @@ print("\n\nExecution done!")
 if name == 'nt':
     print("Do check task manager if cpu affinity masking is set.\n\n")
 else:
-    print(nn)
+    print("Do double check CPU affinity by using command 'taskset -cp [PID]'.\n\n")

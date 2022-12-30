@@ -178,4 +178,4 @@ print("\n\nExecution done!")
 if name == 'nt':
     print("Do double check CPU affinity in Task Manager.\n\n")
 else:
-    print("Do double check CPU by using command taskset -cp [PID].\n\n")
+    print("Do double check CPU affinity by using command 'taskset -cp [PID]'.\n\n")
