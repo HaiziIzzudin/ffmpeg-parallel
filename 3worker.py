@@ -1,6 +1,4 @@
-﻿#!/usr/bin/python
-
-import subprocess
+﻿import subprocess
 import json
 import datetime
 import os
