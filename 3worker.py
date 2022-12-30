@@ -47,7 +47,7 @@ w2sT = str(datetime.timedelta(seconds = (1/3) * duration))
 w3ss = str(datetime.timedelta(seconds = (2/3) * duration))
 
 SSAr = [w1ss,w2sT,w3ss]
-print("\n3 start point of this media is",workerSSArr,"\nDuration from start point is",w2sT)
+print("\n3 start point of this media is",SSAr,"\nDuration from start point is",w2sT)
 
 
 
@@ -63,7 +63,7 @@ Out2 = (videoPath[:-4] + "_AV1-2.mp4")
 Out3 = (videoPath[:-4] + "_AV1-3.mp4")
 OutAr = [Out1,Out2,Out3]
 
-print("\nProcessed video will be named as following:\n" + OutAr[1] + "\n" + OutAr[2] + "\n" + OutAr[3])
+print("\nProcessed video will be named as following:\n",OutAr[1],"\n",OutAr[2],"\n",OutAr[3])
 
 
 
