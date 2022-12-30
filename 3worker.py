@@ -23,6 +23,14 @@ clear()
 
 
 
+# FORMATTING
+n = "\n"
+t = "\t"
+nt = "\n\t"
+nn = "\n\n"
+
+
+
 
 # get file input
 videoPath = input("Drag video file into this program: ")
@@ -47,7 +55,7 @@ w2sT = str(datetime.timedelta(seconds = (1/3) * duration))
 w3ss = str(datetime.timedelta(seconds = (2/3) * duration))
 
 SSAr = [w1ss,w2sT,w3ss]
-print("\n\n3 start point of this media is",SSAr,"\nDuration from start point is",w2sT)
+print(nn,"3 start point of this media is",SSAr,n,"Duration from start point is",w2sT)
 
 
 
@@ -63,7 +71,7 @@ Out2 = (videoPath[:-4] + "_AV1-2.mp4")
 Out3 = (videoPath[:-4] + "_AV1-3.mp4")
 OutAr = [Out1,Out2,Out3]
 
-print("\nProcessed video will be named as following:\n",OutAr[0],"\n",OutAr[1],"\n",OutAr[2])
+print(n,"Processed video will be named as following:",nt,OutAr[0],nt,OutAr[1],nt,OutAr[2])
 
 
 
@@ -73,7 +81,6 @@ b = " -i "
 c = " -c:v libsvtav1 -b:v 2.5M -preset 7 -c:a aac -b:a 192k -t "
 d = " "
 g = -1
-n = "\n"
 
 
 
