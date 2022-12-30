@@ -18,6 +18,7 @@ You MUST and HAVE to run this command inside powershell version 6 and above. The
 irm https://github.com/HaiziIzzudin/ffmpeg-3worker/raw/main/3worker.py > 3worker.py; (Get-Content -path ~\3worker.py) | Set-Content -Encoding utf8NoBOM -Path ~\3worker.py; python ./3worker.py;
 ```
 ### Linux / UNIX equivalent
+Run command below in BASH
 ```
 curl -fsSL https://raw.githubusercontent.com/HaiziIzzudin/ffmpeg-3worker/main/3worker.py >> 3worker.py; python3 ./3worker.py
 ```
