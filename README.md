@@ -38,11 +38,11 @@ You MUST and HAVE to run this command inside powershell version 6 and above. The
   ```
 ### Linux / UNIX equivalent
 Run command below in BASH
-- 3 Worker
+- 3 Workers
   ```
   curl -fsSL https://raw.githubusercontent.com/HaiziIzzudin/ffmpeg-3worker/main/3worker.py >> 3worker.py; python3 ./3worker.py
   ```
-- 2 Worker
+- 2 Workers
   ```
   curl -fsSL https://raw.githubusercontent.com/HaiziIzzudin/ffmpeg-3worker/main/2worker.py >> 2worker.py; python3 ./2worker.py
   ```
