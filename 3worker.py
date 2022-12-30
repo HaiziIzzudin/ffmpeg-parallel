@@ -82,7 +82,7 @@ if name == 'nt': # for windows
 else:            # for mac and linux
         wFile = ["w1.sh","w2.sh","w3.sh"]
 
-for x in wFile:
-    f = open( x , "a")
-    f.write(a + OutAr[x] + b + videoPath + c + w2sT + d + OutAr[x])
+for e in wFile:
+    f = open( e , "a")
+    f.write(a + OutAr[e] + b + videoPath + c + w2sT + d + OutAr[e])
     f.close()
