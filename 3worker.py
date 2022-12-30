@@ -92,7 +92,7 @@ else:            # for mac and linux
         wFile = ["w1.sh","w2.sh","w3.sh","runner.sh"]
 
 for e in wFile:
-    g += 1
+    g = g + 1
     f = open( e , "a")
     f.write(a + OutAr[g] + b + videoPath + c + w2sT + d + OutAr[g])
     f.close()
