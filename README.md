@@ -2,7 +2,7 @@
 
 
 # Encode with 3 concurrent ffmpeg process instead of one!
-This is a Python script where ffmpeg will split inputted video into 3 parts, and encode it to their own cpu affinity SIMULTANEOUSLY to avoid system crash.
+This is a Python script where ffmpeg will split inputted video into 3 parts, and encode it to their own cpu affinity SIMULTANEOUSLY to avoid system crash, and utilize CPU 100%
 
 ## REQUIREMENT / DEPENDENCIES
 - ffmpeg, MUST accessible thru PATH. Those who don't know how to install I will provide tutorial later.
