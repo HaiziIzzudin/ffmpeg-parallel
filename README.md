@@ -46,3 +46,16 @@ Run command below in BASH
   ```
   curl -fsSL https://raw.githubusercontent.com/HaiziIzzudin/ffmpeg-3worker/main/2worker.py >> 2worker.py; python3 ./2worker.py
   ```
+
+## CHANGELOGS
+### Plan on Version 3
+- User can now input custom FFmpeg command instead of prebaked inside script.
+
+### Version 2
+- Temporary files that generated from the program will now be deleted from your computer (including the python script).
+  - If you want to keep the python script, terminate the program during video input screen, by pressing Close (X).
+  - Processed video will now be dropped on Desktop instead of with the original file.
+  - Changed wording and parameters.
+
+### Version 1
+- Initial release
