@@ -49,7 +49,9 @@ Run command below in BASH
 
 ## CHANGELOGS
 ### Plan on Version 3
-- User can now input custom FFmpeg command instead of prebaked inside script.
+- User can now input custom FFmpeg command instead of the one provided.
+- Program can now detect threads count, and allocate automatically, according to your needs; OR maybe not...
+- User can now input their own CPU affinity.
 
 ### Version 2
 - Temporary files that generated from the program will now be deleted from your computer (including the python script).
