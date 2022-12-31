@@ -56,15 +56,14 @@ clear()
 # FORMATTING & STRING TEMPLATE
 a = "ffmpeg -ss "
 b = " -i "
-c = " -c:v libsvtav1 -b:v 2.5M -preset 7 -an -t "
+c = " -c:v libsvtav1 -b:v 5M -preset 12 -an -t "
 d = " "
-n = "\n"
-t = "\t"
+
 nt = "\n\t"
 nn = "\n\n"
 
 # get file input
-videoPath = input("Drag video file into this program:\n")
+videoPath = input("FFmpeg-3worker (Version 2)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 #videoPath = r"C:\Users\Haizi\After_Like.mp4"
 
 # extract and print time in seconds (we use ffprobe here)
@@ -81,30 +80,39 @@ w2sT = str(datetime.timedelta(seconds = (1/3) * duration))
 w3ss = str(datetime.timedelta(seconds = (2/3) * duration))
 
 SSAr = [w1ss,w2sT,w3ss]
-print(nn,"3 start point of this media is",SSAr,n,"Duration from start point is",w2sT)
+print(nn,"3 start point of this media is",SSAr,"\nDuration from start point is",w2sT)
 
 # Write cache file and runner file
 ## but before that, we need to configure outputName
-Out1 = (videoPath[:-4] + "_frag1.mp4")
-Out2 = (videoPath[:-4] + "_frag2.mp4")
-Out3 = (videoPath[:-4] + "_frag3.mp4")
-OutAr = [Out1,Out2,Out3]
-print(n,"Processed fragments will be named as following:",nt,OutAr[0],nt,OutAr[1],nt,OutAr[2])
+# GET FILENAME ONLY
+videoFileNameAr = os.path.split(videoPath) #array
+videoFileNameExt = videoFileNameAr[1] # filename only
+
+Out1 = (videoFileNameExt[:-4] + "_frag1.mp4")
+Out2 = (videoFileNameExt[:-4] + "_frag2.mp4")
+Out3 = (videoFileNameExt[:-4] + "_frag3.mp4")
+fileFragExt = [Out1, Out2, Out3] # this one baru filename + frag Array
+
+print("\nProcessed fragments will be named as following:")
+ee = -1
+for e in fileFragExt:
+    ee += 1
+    print("\t" + e)
 
 ## declare worker name for nt and posix
 if name == 'nt': # for windows
-        wFile = ["w1.bat","w2.bat","w3.bat"]
-        wRunner = "runner.bat"
+    wFile = ["w1.bat","w2.bat","w3.bat"]
+    wRunner = "runner.bat"
 else:            # for mac and linux
-        wFile = ["w1.sh","w2.sh","w3.sh"]
-        wRunner = "runner.sh"
+    wFile = ["w1.sh","w2.sh","w3.sh"]
+    wRunner = "runner.sh"
 
 ## create new worker file based on wFile array
 g = -1
 for e in wFile:
     g += 1
     f = open( e , "a")
-    f.write(a + SSAr[g] + b + videoPath + c + w2sT + d + OutAr[g])
+    f.write(a + SSAr[g] + b + videoPath + c + w2sT + d + fileFragExt[g])
     f.close()
 
 ## create new runner file
@@ -209,7 +217,7 @@ while ffProc == True:
     if checkIfProcessRunning('ffmpeg'):
         ffProc = True
         clear()
-        print('INFO: FFmpeg process detected, halting process temporarily until encoding finished.\n\n')
+        print('INFO: FFmpeg process detected, halting process temporarily until encoding finished.\n')
         print("INFO: While you're on it, please check CPU affinity masking in\nNT: Task Manager / UNIX: taskset -cp [PID]\nif its uses correct masking.\n\n")
     else:
         ffProc = False
@@ -217,21 +225,21 @@ while ffProc == True:
 
 
 # GET FILENAME ONLY
-aa = os.path.split(OutAr[0]) # array
-ab = os.path.split(OutAr[1]) # array
-ac = os.path.split(OutAr[2]) # array
-fileWithExt = [aa[1], ab[1], ac[1]] # this one baru filename only
+#aa = os.path.split(OutAr[0]) # array
+#ab = os.path.split(OutAr[1]) # array
+#ac = os.path.split(OutAr[2]) # array
+#fileWithExt = [aa[1], ab[1], ac[1]] # this one baru filename only
 
 
 # WRITE FILENAME TO CONCATLIST.TXT
 ad = open("concatList.txt" , "a")
-for ae in fileWithExt:
+for ae in fileFragExt:
     ad.write("file '"+ ae + "'\n")
 ad.close()
 
 
 ## CREATE NEW AUDIO-EXTRACT WORKER FILE
-aacPath = videoPath[:-4] + "_audio.aac"
+aacPath = videoFileNameExt[:-4] + "_audio.aac"
 print("All the file listed below has no use and will be removed:\n" + aacPath)
 
 if name == 'nt': # for windows
@@ -266,13 +274,13 @@ af.close()
 
 
 
-## FIRST, RUN AUDIOEXCT.BAT/.SH
+## FIRST, RUN AUDIOEXCT.BAT/.SH & CONCAT.BAT/.SH
 if name == 'nt': # for windows
     subprocess.run('start cmd /c audioexct.bat',shell=True)
     subprocess.run('start cmd /c concat.bat',shell=True)
 else:            # for mac and linux
-    subprocess.run('chmod +x ./audioexct.sh; ./audioexct.sh',shell=True)
-    subprocess.run('chmod +x ./concat.sh; ./concat.sh',shell=True)  
+    subprocess.run('chmod +x ./audioexct.sh; konsole -e bash audioexct.sh',shell=True)
+    subprocess.run('chmod +x ./concat.sh; konsole -e bash concat.sh',shell=True)  
 
 
 
@@ -282,11 +290,16 @@ if name == 'nt': # for windows
 else: # for mac and linux
     listRemoval = ["concatList.txt", "audioexct.sh", "concat.sh"]
 
-print(listRemoval[0] + "\n" + listRemoval[1] + "\n" + listRemoval[2] + "\n" + "\n\nComment out os.remove() in script to keep these file.")
+for aj in fileFragExt:
+    print(aj)
+for ak in listRemoval:
+    print(ak)
+
+print("\n\nComment out os.remove() in script to keep these file.")
 
 time.sleep(2)
 
-for ah in OutAr:
+for ah in fileFragExt:
     os.remove(ah)
 for ai in listRemoval:
     os.remove(ai)
