@@ -49,7 +49,7 @@ Run command below in BASH
 
 ## CHANGELOGS
 ### Plan on Version 4
-- Program can now detect threads count, and allocate automatically, according to your needs; OR maybe not...
+- Program can now detect threads count, and allocate automatically; OR maybe...
 - User can now input their own CPU affinity.
 
 ### Plan on Version 3
