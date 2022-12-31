@@ -56,8 +56,8 @@ Run command below in BASH
 ### Version 2
 - Temporary files that generated from the program will now be deleted from your computer (including the python script).
   - If you want to keep the python script, terminate the program during video input screen, by pressing Close (X).
-  - Processed video will now be dropped on Desktop instead of with the original file.
-  - Changed wording and parameters.
+- Processed video will now be dropped on Desktop instead of with the original file.
+- Changed wording and parameters.
 
 ### Version 1
 - Initial release
