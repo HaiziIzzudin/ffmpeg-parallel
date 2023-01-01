@@ -59,8 +59,9 @@ Run command below in BASH
 ### Version 2
 - Temporary files that generated from the program will now be deleted from your computer (including the python script).
   - If you want to keep the python script, terminate the program during video input screen, by pressing Close (X).
-- Processed video will now be dropped on Desktop instead of with the original file.
-- Changed wording and parameters.
+- Concatenated video will now be dropped on Desktop instead of with the original file.
+- Audio will now be processed with aac@320kb/s. Override by edit it in script.
+- Processed fragments will now be encoded with .mkv container to avoid data corruption, and universability.
 
 ### Version 1
 - Initial release
