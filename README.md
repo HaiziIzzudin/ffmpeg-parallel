@@ -57,8 +57,7 @@ Run command below in BASH
 - A flag where user can choose either 2 worker OR 3 worker
 
 ### Version 2
-- Temporary files that generated from the program will now be deleted from your computer (including the python script).
-  - If you want to keep the python script, terminate the program during video input screen, by pressing Close (X).
+- Users can now choose to remove or keep temporary files. Temporary files need to be DELETED to invoke ffmpeg-parallel again at later time.
 - Concatenated video will now be dropped on Desktop instead of with the original file.
 - Audio will now be processed with aac@320kb/s. Override by edit it in script.
 - Processed fragments will now be encoded with .mkv container to avoid data corruption, and universability.
