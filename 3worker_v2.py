@@ -54,14 +54,16 @@ videoPath = input("FFmpeg-3worker (Version 2)\ngithub.com/HaiziIzzudin\n\nDrag v
 
 
 # ASK USER IF USER HAS CUSTOM FFMPEG COMMANDS. IF NOT, THEY CAN LEAVE BLANK TO USE DEFAULTS
+ffmpegCMDs = "-c:v libaom-av1 -b:v 2.25M -preset 8"
+
 clear()
 print("Are you using custom ffmpeg commands? If so, directly type it here.")
 print("Leave blank if you want to use pre made from the script.")
-print("\nINFO: premade script is '-c:v libsvtav1 -b:v 2.25M -preset 7'")
+print("\nINFO: premade script is " + ffmpegCMDs)
 customFFmpegCMD = input("\nInput string here: ")
 
 if customFFmpegCMD == "":
-    ffmpegCMDs = "-c:v libsvtav1 -b:v 2.25M -preset 7" 
+    ffmpegCMDs = ffmpegCMDs
 else:
     ffmpegCMDs = customFFmpegCMD
 
@@ -210,7 +212,7 @@ if name == 'nt':
         y = win32process.SetProcessAffinityMask(handle)
         print("FFmpeg PID "+ str(s) +" is running on thread "+ str(y))
 else:
-    y = [os.sched_getaffinity(p), os.sched_getaffinity(q), os.sched_getaffinity(r)]
+    y = [os.sched_getaffinity(p), os.sched_getaffinity(q)]
     for w in PIDArr:
         print("FFmpeg PID "+ str(w) +" is running on thread "+ str(y))
 
