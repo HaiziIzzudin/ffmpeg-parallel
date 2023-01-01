@@ -20,10 +20,6 @@ def clear():
         _ = system('clear')
         
 def findProcessIdByName(processName):
-    '''
-    Get a list of all the PIDs of a all the running process whose name contains
-    the given string processName
-    '''
     listOfProcessObjects = []
     #Iterate over the all the running process
     for proc in psutil.process_iter():
@@ -37,9 +33,6 @@ def findProcessIdByName(processName):
     return listOfProcessObjects;
 
 def checkIfProcessRunning(processName):
-    '''
-    Check if there is any running process that contains the given name processName.
-    '''
     #Iterate over the all the running process
     for proc in psutil.process_iter():
         try:
@@ -53,45 +46,54 @@ def checkIfProcessRunning(processName):
 # CLEAR TERMINAL
 clear()
 
-# FORMATTING & STRING TEMPLATE
-a = "ffmpeg -ss "
-b = " -i "
-c = " -c:v libsvtav1 -b:v 5M -preset 12 -an -t "
-d = " "
 
-nt = "\n\t"
-nn = "\n\n"
 
 # get file input
 videoPath = input("FFmpeg-3worker (Version 2)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
-#videoPath = r"C:\Users\Haizi\After_Like.mp4"
+
+
+
+# ASK USER IF USER HAS CUSTOM FFMPEG COMMANDS. IF NOT, THEY CAN LEAVE BLANK TO USE DEFAULTS
+clear()
+print("Are you using custom ffmpeg commands? If so, directly type it here.")
+print("Leave blank if you want to use pre made from the script.")
+print("\nINFO: premade script is '-c:v libsvtav1 -b:v 2.25M -preset 7'")
+customFFmpegCMD = input("\nInput string here: ")
+
+if customFFmpegCMD == "":
+    ffmpegCMDs = "-c:v libsvtav1 -b:v 2.25M -preset 7" 
+else:
+    ffmpegCMDs = customFFmpegCMD
+
+
 
 # extract and print time in seconds (we use ffprobe here)
 out = subprocess.check_output(["ffprobe", "-v", "quiet", "-show_format", "-print_format", "json", videoPath])
 ffprobe_data = json.loads(out)
 duration = float(ffprobe_data["format"]["duration"])
 filename = str(ffprobe_data["format"]["filename"])
+
+clear()
 print("This video filename is " + str(filename))
 print("Total duration in seconds is " + str(duration))
 
+
+
 # now, find its HH:MM:SS for each worker (by fraction)
-w1ss = str(datetime.timedelta(seconds = (0/3) * duration))
-w2sT = str(datetime.timedelta(seconds = (1/3) * duration))
-w3ss = str(datetime.timedelta(seconds = (2/3) * duration))
+w1ss = str(datetime.timedelta(seconds = (0/2) * duration))
+w2sT = str(datetime.timedelta(seconds = (1/2) * duration))
+SSAr = [w1ss,w2sT]
+print("\n\n3 start point of this media is",SSAr,"\nDuration from start point is",w2sT)
 
-SSAr = [w1ss,w2sT,w3ss]
-print(nn,"3 start point of this media is",SSAr,"\nDuration from start point is",w2sT)
 
-# Write cache file and runner file
-## but before that, we need to configure outputName
-# GET FILENAME ONLY
+
+# GET FILENAME+EXTENSION ONLY, NO PATH
 videoFileNameAr = os.path.split(videoPath) #array
 videoFileNameExt = videoFileNameAr[1] # filename only
 
 Out1 = (videoFileNameExt[:-4] + "_frag1.mp4")
 Out2 = (videoFileNameExt[:-4] + "_frag2.mp4")
-Out3 = (videoFileNameExt[:-4] + "_frag3.mp4")
-fileFragExt = [Out1, Out2, Out3] # this one baru filename + frag Array
+fileFragExt = [Out1, Out2] # this one baru filename + frag + extension Array
 
 print("\nProcessed fragments will be named as following:")
 ee = -1
@@ -99,36 +101,44 @@ for e in fileFragExt:
     ee += 1
     print("\t" + e)
 
+
+
 ## declare worker name for nt and posix
-if name == 'nt': # for windows
-    wFile = ["w1.bat","w2.bat","w3.bat"]
+if name == 'nt':
+    wFile = ["w1.bat","w2.bat"]
     wRunner = "runner.bat"
-else:            # for mac and linux
-    wFile = ["w1.sh","w2.sh","w3.sh"]
+else:
+    wFile = ["w1.sh","w2.sh"]
     wRunner = "runner.sh"
 
-## create new worker file based on wFile array
+
+
+# CREATE NEW WORKER FILE BASED ON WFILE ARRAY
 g = -1
 for e in wFile:
     g += 1
     f = open( e , "a")
-    f.write(a + SSAr[g] + b + videoPath + c + w2sT + d + fileFragExt[g])
+    f.write("ffmpeg -ss " + SSAr[g] + " -i " + videoPath +" "+ ffmpegCMDs +" "+ w2sT +" "+ fileFragExt[g])
     f.close()
 
-## create new runner file
+
+
+# CREATE NEW RUNNER FILE
 i = -1
 j = open(wRunner , "a")
 for h in wFile:
-    if name == 'nt': # for windows
+    if name == 'nt':
         j.write("start cmd /c " + h + "\n")
-    else:            # for mac and linux
+    else:
         j.write("konsole -e bash ./" + h + "&\n")
 j.close()
 
+
+
 # RUN RUNNER --> W1,W2,W3
-if name == 'nt': # for windows
+if name == 'nt':
     subprocess.Popen('start cmd /c runner.bat',shell=True)
-else:            # for mac and linux
+else:
     subprocess.Popen('chmod +x ./runner.sh; ./runner.sh',shell=True)
 
 time.sleep(5)
@@ -142,7 +152,7 @@ time.sleep(5)
 
 
 
-## List process ID detected from name: ffmpeg
+## LIST PROCESS BASED ON PROCESS NAME: FFMPEG
 k = []
 listOfProcessIds = findProcessIdByName('ffmpeg')
 if len(listOfProcessIds) > 0:
@@ -153,49 +163,59 @@ if len(listOfProcessIds) > 0:
 else :
     print('ERROR: FFmpeg process not detected')
     
-## assigning every ffmpeg worker ID to its own var
-### NT & POSIX
+
+
+# ASSIGN EVERY FFMPEG PID TO ITS OWN VARIABLE
 p = k[0]
 q = k[1]
 r = k[2]
 PIDArr = [p,q,r]
 print(PIDArr)
 
-## create var with its own affinity mask
-if name == 'nt': # for windows
-    mask1 = 1185
-    mask2 = 600
-    mask3 = 2310
-else:            # for mac and linux
-    mask1 = {0,5,10,7}
-    mask2 = {4,9,6,3}
-    mask3 = {8,1,2,11}
 
-AffArr = [mask1,mask2,mask3]
+
+## CREATE NEW VARIABLE WITH ITS OWN AFFINITY MASK
+if name == 'nt':
+    mask1 = 63
+    mask2 = 4032
+else:
+    mask1 = {0,1,2,3,4,5}
+    mask2 = {6,7,8,9,10,11}
+
+AffArr = [mask1,mask2]
 print("\nTherefore uses "+ name +" format affinity masking:")
 print(AffArr)
 
-## now set affinity to the PID ffmpeg
+
+
+# SETTING CPU AFFINITY TO EVERY FFMPEG PID
 u = -1
-if name == 'nt': # for windows
+if name == 'nt':
     for s in PIDArr:
         u += 1
         handle = win32api.OpenProcess(win32con.PROCESS_ALL_ACCESS, True, s)
         win32process.SetProcessAffinityMask(handle, AffArr[u])
-else:            # for mac and linux
+else:
     for s in PIDArr:
         u += 1
         os.sched_setaffinity(s, AffArr[u])
 
+
+
 ## get CPU affinity for each ffmpeg worker and print it (POSIX ONLY).
-if name == 'posix': # for windows
-    unixAffAr = [os.sched_getaffinity(p), os.sched_getaffinity(q), os.sched_getaffinity(r)]
-    print("\nAffinity set!")
-    x = -1
+print("\nAffinity set!")
+
+if name == 'nt':
     for w in PIDArr:
-        x += 1
-        y = unixAffAr[x]
+        handle = win32api.OpenProcess(win32con.PROCESS_ALL_ACCESS, True, s)
+        y = win32process.SetProcessAffinityMask(handle)
+        print("FFmpeg PID "+ str(s) +" is running on thread "+ str(y))
+else:
+    y = [os.sched_getaffinity(p), os.sched_getaffinity(q), os.sched_getaffinity(r)]
+    for w in PIDArr:
         print("FFmpeg PID "+ str(w) +" is running on thread "+ str(y))
+
+
 
 # DELETE RUNNER AND WORKER FILE
 for v in wFile:
@@ -224,12 +244,6 @@ while ffProc == True:
         print('INFO: FFmpeg process not detected anymore. Proceeding to next process...\n\n')
 
 
-# GET FILENAME ONLY
-#aa = os.path.split(OutAr[0]) # array
-#ab = os.path.split(OutAr[1]) # array
-#ac = os.path.split(OutAr[2]) # array
-#fileWithExt = [aa[1], ab[1], ac[1]] # this one baru filename only
-
 
 # WRITE FILENAME TO CONCATLIST.TXT
 ad = open("concatList.txt" , "a")
@@ -238,13 +252,14 @@ for ae in fileFragExt:
 ad.close()
 
 
-## CREATE NEW AUDIO-EXTRACT WORKER FILE
+
+## CREATE NEW AUDIO EXTRACT WORKER FILE
 aacPath = videoFileNameExt[:-4] + "_audio.aac"
 print("All the file listed below has no use and will be removed:\n" + aacPath)
 
-if name == 'nt': # for windows
+if name == 'nt':
     af = open("audioexct.bat" , "a")
-else:            # for mac and linux
+else:
     af = open("audioexct.sh" , "a")
 
 af.write("ffmpeg -i "+ videoPath +" -vn -c:a copy " + aacPath)
@@ -252,22 +267,21 @@ af.close()
 
 
 
-## CREATE NEW CONCAT+AUDIO WORKER FILE
+## CREATE NEW CONCATENATE + AUDIO WORKER FILE
 ag = os.path.split(videoPath) # array
 agFname = ag[1] # select filename only
 agFnameNoExt = agFname[:-4]
 
 homedir = os.path.expanduser('~')
 
-if name == 'nt': # for windows
+if name == 'nt':
     DesktopDir = "\\Desktop\\"
     af = open("concat.bat" , "a")
-else:            # for mac and linux
+else:
     DesktopDir = "/Desktop/"
     af = open("concat.sh" , "a")
 
 outConcatPlusAudio = homedir + DesktopDir + agFnameNoExt + "_AV1.mp4"
-# print(outConcatPlusAudio)
 
 af.write("ffmpeg -f concat -safe 0 -y -i concatList.txt -i "+ aacPath +" -c copy " + outConcatPlusAudio)
 af.close()
@@ -285,9 +299,9 @@ else:            # for mac and linux
 
 
 ## DELETE CONCAT.BAT/.SH & CONCATLIST & AUDIOEXCT.BAT/.SH & ALL FRAGMENTED ENCODER
-if name == 'nt': # for windows
+if name == 'nt':
     listRemoval = ["concatList.txt", "audioexct.bat", "concat.bat"]
-else: # for mac and linux
+else:
     listRemoval = ["concatList.txt", "audioexct.sh", "concat.sh"]
 
 for aj in fileFragExt:
