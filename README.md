@@ -53,14 +53,15 @@ Run command below in BASH
 - User can now input their own CPU affinity.
 
 ### Plan on Version 3
-- User can now input custom FFmpeg command instead of the one provided.
-- A flag where user can choose either 2 worker OR 3 worker
+- Continue encoding when process is interrupted or when sudden power loss occured.
+- When there's only one ffmpeg encoding PID detected, all CPU affinity will then be updated to be allocated to that PID only.
 
 ### Version 2
 - Users can now choose to remove or keep temporary files. Temporary files need to be DELETED to invoke ffmpeg-parallel again at later time.
 - Concatenated video will now be dropped on Desktop instead of with the original file.
 - Audio will now be processed with aac@320kb/s. Override by edit it in script.
 - Processed fragments will now be encoded with .mkv container to avoid data corruption, and universability.
+- User can now input custom FFmpeg command instead of the one provided.
 
 ### Version 1
 - Initial release
