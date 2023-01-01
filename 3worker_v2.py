@@ -54,7 +54,7 @@ videoPath = input("FFmpeg-3worker (Version 2)\ngithub.com/HaiziIzzudin\n\nDrag v
 
 
 # ASK USER IF USER HAS CUSTOM FFMPEG COMMANDS. IF NOT, THEY CAN LEAVE BLANK TO USE DEFAULTS
-ffmpegCMDs = "-c:v libaom-av1 -b:v 2.25M -preset 8"
+ffmpegCMDs = "-c:v libsvtav1 -b:v 2.25M -preset 7 -pix_fmt yuv420p10le"
 
 clear()
 print("Are you using custom ffmpeg commands? If so, directly type it here.")
@@ -256,14 +256,14 @@ ad.close()
 
 ## CREATE NEW AUDIO EXTRACT WORKER FILE
 aacPath = videoFileNameExt[:-4] + "_audio.aac"
-print("All the file listed below has no use and will be removed:\n" + aacPath)
+print("Temporary audio only file will be rendered:\n" + aacPath)
 
 if name == 'nt':
     af = open("audioexct.bat" , "a")
 else:
     af = open("audioexct.sh" , "a")
 
-af.write("ffmpeg -i "+ videoPath +" -vn -c:a copy " + aacPath)
+af.write("ffmpeg -i "+ videoPath +" -vn -c:a aac -b:a 320k " + aacPath)
 af.close()
 
 
@@ -284,7 +284,7 @@ else:
 
 outConcatPlusAudio = homedir + DesktopDir + agFnameNoExt + "_AV1.mp4"
 
-af.write("ffmpeg -f concat -safe 0 -y -i concatList.txt -i "+ aacPath +" -c copy " + outConcatPlusAudio)
+af.write("ffmpeg -f concat -safe 0 -i concatList.txt -i "+ aacPath +" -c copy " + outConcatPlusAudio)
 af.close()
 
 
@@ -305,21 +305,26 @@ if name == 'nt':
 else:
     listRemoval = ["concatList.txt", "audioexct.sh", "concat.sh"]
 
-for aj in fileFragExt:
-    print(aj)
-for ak in listRemoval:
-    print(ak)
-
-print("\n\nComment out os.remove() in script to keep these file.")
 
 time.sleep(2)
 
-for ah in fileFragExt:
-    os.remove(ah)
-for ai in listRemoval:
-    os.remove(ai)
-os.remove(aacPath)
-os.remove("3worker.py")
+
+clear()
+option = input("\nRemove temporary file? [y/n] (case-sensitive): ")
+if option == "y":
+    print("Removing temporary file...")
+    for ah in fileFragExt:
+        os.remove(ah)
+    for ai in listRemoval:
+        os.remove(ai)
+    os.remove(aacPath)
+    os.remove("3worker.py")
+elif option == "n":
+    print("\nTemporary file kept.")
+    print("Access these file at "+ homedir)
+    print("(Make sure to DELETE all temporary files before running ffmpeg-parallel again.)")
+
+
 
 
 
