@@ -168,8 +168,7 @@ else :
 # ASSIGN EVERY FFMPEG PID TO ITS OWN VARIABLE
 p = k[0]
 q = k[1]
-r = k[2]
-PIDArr = [p,q,r]
+PIDArr = [p,q]
 print(PIDArr)
 
 
