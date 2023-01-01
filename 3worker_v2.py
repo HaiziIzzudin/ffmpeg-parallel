@@ -118,7 +118,7 @@ g = -1
 for e in wFile:
     g += 1
     f = open( e , "a")
-    f.write("ffmpeg -ss " + SSAr[g] + " -i " + videoPath +" "+ ffmpegCMDs +" "+ w2sT +" "+ fileFragExt[g])
+    f.write("ffmpeg -ss " + SSAr[g] + " -i " + videoPath +" "+ ffmpegCMDs +" -an -t "+ w2sT +" "+ fileFragExt[g])
     f.close()
 
 
