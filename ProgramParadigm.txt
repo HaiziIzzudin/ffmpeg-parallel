@@ -1,0 +1,8 @@
+Aim / workflow of this program is:
+1. Check if there is empty slot in SlotAr
+2. If there is None, assign work to that SlotAr[]
+3. Assign also CPU affinity to its PID (PID will filled the SlotAr)
+4. loop program until all segments has finished (this can be checked by using counter, based on Segment Count)
+
+How to make sure program will stop at only 3 processes, while not stopping the loop?
+Kalau dah full kita takboleh perintah program untuk stop kan, mesti ada counter of some sort to assist it. Therefore kita akan letak satu loop untuk check jika segments sume dah dilalui, therefore program akan proceed to concat all of them.
