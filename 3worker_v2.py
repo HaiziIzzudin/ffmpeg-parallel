@@ -93,8 +93,8 @@ print("\n\n3 start point of this media is",SSAr,"\nDuration from start point is"
 videoFileNameAr = os.path.split(videoPath) #array
 videoFileNameExt = videoFileNameAr[1] # filename only
 
-Out1 = (videoFileNameExt[:-4] + "_frag1.mp4")
-Out2 = (videoFileNameExt[:-4] + "_frag2.mp4")
+Out1 = (videoFileNameExt[:-4] + "_frag1.mkv")
+Out2 = (videoFileNameExt[:-4] + "_frag2.mkv")
 fileFragExt = [Out1, Out2] # this one baru filename + frag + extension Array
 
 print("\nProcessed fragments will be named as following:")
