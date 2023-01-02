@@ -275,7 +275,7 @@ if name == 'nt':
 else:
     af = open("audioexct.sh" , "a")
 
-af.write("ffmpeg -i "+ videoPath +" -vn -c:a aac -b:a 320k " + aacPath)
+af.write("ffmpeg -nostats -nostdin -hide_banner -loglevel quiet -i "+ videoPath +" -vn -c:a aac -b:a 320k " + aacPath)
 af.close()
 
 
@@ -296,14 +296,14 @@ else:
 
 outConcatPlusAudio = homedir + DesktopDir + agFnameNoExt + "_AV1.mp4"
 
-af.write("ffmpeg -f concat -safe 0 -i concatList.txt -i "+ aacPath +" -c copy " + outConcatPlusAudio)
+af.write("ffmpeg -nostats -nostdin -hide_banner -loglevel quiet -f concat -safe 0 -i concatList.txt -i "+ aacPath +" -c copy " + outConcatPlusAudio)
 af.close()
 
 
 
 ## FIRST, RUN AUDIOEXCT.BAT/.SH & CONCAT.BAT/.SH
 if name == 'nt': # for windows
-    subprocess.run('start cmd /c audioexct.bat',shell=True)
+    subprocess.run('audioexct.bat',shell=True)
     ffProc = True
     
     while ffProc == True:
@@ -317,7 +317,7 @@ if name == 'nt': # for windows
             ffProc = False
             
     print('INFO: Concatenating...\n\n')
-    subprocess.run('start cmd /c concat.bat',shell=True)
+    subprocess.run('concat.bat',shell=True)
 
 else:            # for mac and linux
     subprocess.run('chmod +x ./audioexct.sh; konsole -e bash audioexct.sh',shell=True)
