@@ -16,7 +16,7 @@ if name == 'nt': # for windows
 def clear():
     if name == 'nt': # for windows
         _ = system('cls')
-    else: # for mac and linux(here, os.name is 'posix')
+    else: # for mac and linux (here, os.name is 'posix')
         _ = system('clear')
         
 def findProcessIdByName(processName):
@@ -49,7 +49,7 @@ clear()
 
 
 # get file input
-videoPath = input("FFmpeg-3worker (Version 2.125)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-3worker (Version 2 - debug code: 0201231008)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 
 
 
@@ -64,6 +64,8 @@ customFFmpegCMD = input("\nInput string here: ")
 
 if customFFmpegCMD == "":
     ffmpegCMDs = ffmpegCMDs
+elif customFFmpegCMD == "debug":
+    ffmpegCMDs = "-c:v libsvtav1 -b:v 5M -preset 12 -pix_fmt yuv420p10le"
 else:
     ffmpegCMDs = customFFmpegCMD
 
@@ -288,9 +290,12 @@ agFnameNoExt = agFname[:-4]
 homedir = os.path.expanduser('~')
 
 if name == 'nt':
+    
     DesktopDir = "\\Desktop\\"
     af = open("concat.bat" , "a")
+
 else:
+    
     DesktopDir = "/Desktop/"
     af = open("concat.sh" , "a")
 
@@ -302,40 +307,19 @@ af.close()
 
 
 ## FIRST, RUN AUDIOEXCT.BAT/.SH & CONCAT.BAT/.SH
-if name == 'nt': # for windows
+print('INFO: Encoding aac file...\n')
+
+if name == 'nt':
     
     subprocess.run('audioexct.bat',shell=True)
-    ffProc = True
-    
-    while ffProc == True:
-        
-        if checkIfProcessRunning('ffmpeg'):
-            ffProc = True
-            clear()
-            print('INFO: Encoding aac file\n')
-        
-        else:
-            ffProc = False
-            
     print('INFO: Concatenating...\n\n')
     subprocess.run('concat.bat',shell=True)
 
-else:            # for mac and linux
-    subprocess.run('chmod +x ./audioexct.sh; konsole -e bash audioexct.sh',shell=True)
-    ffProc = True
+else:
     
-    while ffProc == True:
-        
-        if checkIfProcessRunning('ffmpeg'):
-            ffProc = True
-            clear()
-            print('INFO: Encoding aac file\n')
-        
-        else:
-            ffProc = False
-            
+    subprocess.run('chmod +x ./audioexct.sh; ./audioexct.sh',shell=True)
     print('INFO: Concatenating...\n\n')
-    subprocess.run('chmod +x ./concat.sh; konsole -e bash concat.sh',shell=True)  
+    subprocess.run('chmod +x ./concat.sh; ./concat.sh',shell=True)  
 
 
 
@@ -351,15 +335,24 @@ time.sleep(2)
 
 clear()
 option = input("\nRemove temporary file? [y/n] (case-sensitive): ")
+
 if option == "y":
+    
     print("Removing temporary file...")
+    
     for ah in fileFragExt:
+        
         os.remove(ah)
+    
     for ai in listRemoval:
+        
         os.remove(ai)
+    
     os.remove(aacPath)
     os.remove("3worker.py")
+
 elif option == "n":
+    
     print("\nTemporary file kept.")
     print("Access these file at "+ homedir)
     print("(Make sure to DELETE all temporary files before running ffmpeg-parallel again.)")
@@ -371,4 +364,3 @@ elif option == "n":
 
 # MESSAGE DONE PROCESSING
 print("\n\nExecution done!\nYour encoded file should be in Desktop.\n\n")
-
