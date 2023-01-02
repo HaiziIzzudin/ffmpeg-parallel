@@ -193,13 +193,19 @@ print(AffArr)
 
 # SETTING CPU AFFINITY TO EVERY FFMPEG PID
 u = -1
+
 if name == 'nt':
+    
     for s in PIDArr:
+        
         u += 1
         handle = win32api.OpenProcess(win32con.PROCESS_ALL_ACCESS, True, s)
         win32process.SetProcessAffinityMask(handle, AffArr[u])
+
 else:
+    
     for s in PIDArr:
+        
         u += 1
         os.sched_setaffinity(s, AffArr[u])
 
@@ -209,20 +215,28 @@ else:
 print("\nAffinity set!")
 
 if name == 'nt':
+    
     for w in PIDArr:
+        
         handle = win32api.OpenProcess(win32con.PROCESS_ALL_ACCESS, True, s)
         y = win32process.GetProcessAffinityMask(handle)
         print("FFmpeg PID "+ str(w) +" is running on thread "+ str(y))
+
 else:
+    
     y = [os.sched_getaffinity(p), os.sched_getaffinity(q)]
+    
     for w in PIDArr:
+        
         print("FFmpeg PID "+ str(w) +" is running on thread "+ str(y))
 
 
 
 # DELETE RUNNER AND WORKER FILE
 for v in wFile:
+    
     os.remove(v)
+
 os.remove(wRunner)
 
 
@@ -236,27 +250,18 @@ os.remove(wRunner)
 
 # LOOP CHECK IF FFMPEG PROCESS IF RUNNING, IF TRUE THEN DON'T PROCEED TO NEXT STAGE
 ffProc = True
+
 while ffProc == True:
 
     if checkIfProcessRunning('ffmpeg'):
+        
         ffProc = True
         clear()
-        print('INFO: FFmpeg process detected, halting process temporarily until encoding finished.\n')
-        
-        if name == 'nt':
-            for w in PIDArr:
-                handle = win32api.OpenProcess(win32con.PROCESS_ALL_ACCESS, True, s)
-                y = win32process.GetProcessAffinityMask(handle)
-                print("FFmpeg PID "+ str(w) +" is running on thread "+ str(y))
-        else:
-            y = [os.sched_getaffinity(p), os.sched_getaffinity(q)]
-            counter = 0
-            for w in PIDArr:
-                print("FFmpeg PID "+ str(w) +" is running on thread "+ str(y[counter]))
-                counter += 1
-        
+        print('INFO: FFmpeg process detected, halting process temporarily until encoding finished.\n')        
         print("\nINFO: While you're on it, please check CPU affinity masking in\nNT: Task Manager / UNIX: taskset -cp [PID]\nif its uses correct masking.\n\n")
+    
     else:
+        
         ffProc = False
         print('INFO: FFmpeg process not detected anymore. Proceeding to next process...\n\n')
 
@@ -264,8 +269,11 @@ while ffProc == True:
 
 # WRITE FILENAME TO CONCATLIST.TXT
 ad = open("concatList.txt" , "a")
+
 for ae in fileFragExt:
+    
     ad.write("file '"+ ae + "'\n")
+
 ad.close()
 
 
@@ -275,8 +283,11 @@ aacPath = videoFileNameExt[:-4] + "_audio.aac"
 print("Temporary audio only file will be rendered:\n" + aacPath)
 
 if name == 'nt':
+    
     af = open("audioexct.bat" , "a")
+
 else:
+    
     af = open("audioexct.sh" , "a")
 
 af.write("ffmpeg -nostats -nostdin -hide_banner -loglevel quiet -i "+ videoPath +" -vn -c:a aac -b:a 320k " + aacPath)
