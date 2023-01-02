@@ -49,7 +49,7 @@ clear()
 
 
 # get file input
-videoPath = input("FFmpeg-3worker (Version 2 - debug code: 0201231008)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-3worker (Version 2 - debug code: 0201231108)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 
 
 
@@ -250,8 +250,10 @@ while ffProc == True:
                 print("FFmpeg PID "+ str(w) +" is running on thread "+ str(y))
         else:
             y = [os.sched_getaffinity(p), os.sched_getaffinity(q)]
+            counter = 0
             for w in PIDArr:
-                print("FFmpeg PID "+ str(w) +" is running on thread "+ str(y))
+                print("FFmpeg PID "+ str(w) +" is running on thread "+ str(y[counter]))
+                counter += 1
         
         print("\nINFO: While you're on it, please check CPU affinity masking in\nNT: Task Manager / UNIX: taskset -cp [PID]\nif its uses correct masking.\n\n")
     else:
