@@ -304,14 +304,41 @@ af.close()
 ## FIRST, RUN AUDIOEXCT.BAT/.SH & CONCAT.BAT/.SH
 if name == 'nt': # for windows
     subprocess.run('start cmd /c audioexct.bat',shell=True)
+    ffProc = True
+    
+    while ffProc == True:
+        
+        if checkIfProcessRunning('ffmpeg'):
+            ffProc = True
+            clear()
+            print('INFO: Encoding aac file\n')
+        
+        else:
+            ffProc = False
+            
+    print('INFO: Concatenating...\n\n')
     subprocess.run('start cmd /c concat.bat',shell=True)
+
 else:            # for mac and linux
     subprocess.run('chmod +x ./audioexct.sh; konsole -e bash audioexct.sh',shell=True)
+    ffProc = True
+    
+    while ffProc == True:
+        
+        if checkIfProcessRunning('ffmpeg'):
+            ffProc = True
+            clear()
+            print('INFO: Encoding aac file\n')
+        
+        else:
+            ffProc = False
+            
+    print('INFO: Concatenating...\n\n')
     subprocess.run('chmod +x ./concat.sh; konsole -e bash concat.sh',shell=True)  
 
 
 
-## DELETE CONCAT.BAT/.SH & CONCATLIST & AUDIOEXCT.BAT/.SH & ALL FRAGMENTED ENCODER
+# DELETE CONCAT.BAT/.SH & CONCATLIST & AUDIOEXCT.BAT/.SH & ALL FRAGMENTED ENCODER
 if name == 'nt':
     listRemoval = ["concatList.txt", "audioexct.bat", "concat.bat"]
 else:
@@ -343,3 +370,4 @@ elif option == "n":
 
 # MESSAGE DONE PROCESSING
 print("\n\nExecution done!\nYour encoded file should be in Desktop.\n\n")
+
