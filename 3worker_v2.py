@@ -203,14 +203,14 @@ else:
 
 
 
-## get CPU affinity for each ffmpeg worker and print it (POSIX ONLY).
+# GET CPU AFFINITY FOR EACH FFMPEG WORKER (THIS IS AFTER APPLYING CPU MASKING)
 print("\nAffinity set!")
 
 if name == 'nt':
     for w in PIDArr:
         handle = win32api.OpenProcess(win32con.PROCESS_ALL_ACCESS, True, s)
-        y = win32process.SetProcessAffinityMask(handle)
-        print("FFmpeg PID "+ str(s) +" is running on thread "+ str(y))
+        y = win32process.GetProcessAffinityMask(handle)
+        print("FFmpeg PID "+ str(w) +" is running on thread "+ str(y))
 else:
     y = [os.sched_getaffinity(p), os.sched_getaffinity(q)]
     for w in PIDArr:
@@ -235,10 +235,22 @@ os.remove(wRunner)
 # LOOP CHECK IF FFMPEG PROCESS IF RUNNING, IF TRUE THEN DON'T PROCEED TO NEXT STAGE
 ffProc = True
 while ffProc == True:
+
     if checkIfProcessRunning('ffmpeg'):
         ffProc = True
         clear()
         print('INFO: FFmpeg process detected, halting process temporarily until encoding finished.\n')
+        
+        if name == 'nt':
+            for w in PIDArr:
+                handle = win32api.OpenProcess(win32con.PROCESS_ALL_ACCESS, True, s)
+                y = win32process.GetProcessAffinityMask(handle)
+                print("FFmpeg PID "+ str(w) +" is running on thread "+ str(y))
+        else:
+            y = [os.sched_getaffinity(p), os.sched_getaffinity(q)]
+            for w in PIDArr:
+                print("FFmpeg PID "+ str(w) +" is running on thread "+ str(y))
+        
         print("INFO: While you're on it, please check CPU affinity masking in\nNT: Task Manager / UNIX: taskset -cp [PID]\nif its uses correct masking.\n\n")
     else:
         ffProc = False
