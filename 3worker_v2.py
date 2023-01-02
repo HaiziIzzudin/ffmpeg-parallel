@@ -251,7 +251,7 @@ while ffProc == True:
             for w in PIDArr:
                 print("FFmpeg PID "+ str(w) +" is running on thread "+ str(y))
         
-        print("INFO: While you're on it, please check CPU affinity masking in\nNT: Task Manager / UNIX: taskset -cp [PID]\nif its uses correct masking.\n\n")
+        print("\nINFO: While you're on it, please check CPU affinity masking in\nNT: Task Manager / UNIX: taskset -cp [PID]\nif its uses correct masking.\n\n")
     else:
         ffProc = False
         print('INFO: FFmpeg process not detected anymore. Proceeding to next process...\n\n')
