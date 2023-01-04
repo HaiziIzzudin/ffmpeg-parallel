@@ -45,6 +45,7 @@ def checkIfProcessRunning(processName):
 
 def configureFFmpeg():
     
+    clear()
     print("Enter in video codec to use for your encoding.")
     print("Some of the helpful keyword is: libsvtav1, libx265")
     print("TIP: 'libsvtav1' is useful to compress video that is ready for delivery. NOT COMPATIBLE with video editors and some low end devices.")
@@ -84,7 +85,8 @@ def configureFFmpeg():
         print("custom codec inputted. Make sure the codec you inserted abide with the ffmpeg documentation, else encoding will fail.")
         speed = input("\nInput speed (that is valid for the codec): ")
     
-    videoBitrate = input("enter bitrate to use in kb/s (integer only): ")
+    ffmpegCMDs = "-c:v "+ codecs +" -preset "+ speed +" -b:v " + (videoBitrate/2) + " -pix_fmt yuv420p"
+    print(ffmpegCMDs)
 
 
 
@@ -94,7 +96,7 @@ clear()
 
 
 # GET FILE INPUT
-videoPath = input("FFmpeg-3worker (Version 2 - debug code: 0401230141)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-3worker (Version 2 - debug code: 0401230504)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 
 
 
@@ -104,13 +106,11 @@ ffprobe_data = json.loads(out)
 duration = float(ffprobe_data["format"]["duration"])
 filename = str(ffprobe_data["format"]["filename"])
 videoBitrate = int(ffprobe_data["format"]["bit_rate"])
-videoColorSpace = str(ffprobe_data["format"]["pix_fmt"])
 
 clear()
 print("This video filename is " + str(filename))
 print("Total duration in seconds is " + str(duration))
 print("Video bitrate is " + str(videoBitrate))
-print("Video colour space is " + str(videoColorSpace))
 
 configureFFmpeg()
 
