@@ -43,43 +43,76 @@ def checkIfProcessRunning(processName):
             pass
     return False;
 
+def configureFFmpeg():
+    
+    print("Enter in video codec to use for your encoding.")
+    print("Some of the helpful keyword is: libsvtav1, libx265")
+    print("TIP: 'libsvtav1' is useful to compress video that is ready for delivery. NOT COMPATIBLE with video editors and some low end devices.")
+    print("TIP: 'libx265' is useful to compress video that is used for production. COMPATIBLE with video editors like Adobe Premiere Pro and some hardware.")
+    codecs = input("Input string (strict lowercase only): ")
+    clear()
+
+    if codecs == 'libsvtav1':
+
+        print("libsvtav1 selected. Input speed to use.")
+        print("TIP: Speed 12 = ~36 frames processed / second.")
+        print("TIP: Speed 7 = ~20 frames processed / second.")
+        print("TIP: Speed 4 = ~7 frames processed / second.")
+        print("(This metrics is based on system: AMD Ryzen 5 6600H on max TDP)")
+        speed = input("\nInput integer only: ")
+
+    elif codecs == 'libx265':
+
+        print("libx265 selected. Input speed to use.")
+        print("TIP: Speed 'veryfast' = ~25 frames processed / second.")
+        print("TIP: Speed 'medium' = ~18 frames processed / second.")
+        print("TIP: Speed 'veryslow' = ~2 frames processed / second.")
+        print("(This metrics is based on system: AMD Ryzen 5 6600H on max TDP)")
+        speed = input("\nInput valid string only (ultrafast, veryfast, fast, medium, slow, veryslow): ")
+
+    elif codecs == 'debug':
+
+        print("DEBUG SELECTED.")
+        print("\nWARNING === WARNING === WARNING === WARNING === WARNING === WARNING === WARNING === WARNING === WARNING === WARNING ==\n")
+        print("ONLY USE THIS IF YOU ARE HAIZI IZZUDIN/ DEVS THAT HANDS ON THIS CODE.")
+        print("THIS OPTION ONLY TO USE FOR NO COMPRESSION ENCODING AND TO TEST FILE DIRECTORY AND WRITING.")
+        print("THIS OPTION WILL NOT YIELD TO A REAL WORLD ENCODING.")
+        print("ENCODING WILL NOW SET TO THE FASTEST.")
+
+    else:
+
+        print("custom codec inputted. Make sure the codec you inserted abide with the ffmpeg documentation, else encoding will fail.")
+        speed = input("\nInput speed (that is valid for the codec): ")
+    
+    videoBitrate = input("enter bitrate to use in kb/s (integer only): ")
+
+
+
 # CLEAR TERMINAL
 clear()
 
 
 
-# get file input
-videoPath = input("FFmpeg-3worker (Version 2 - debug code: 0201231119)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+# GET FILE INPUT
+videoPath = input("FFmpeg-3worker (Version 2 - debug code: 0401230141)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 
 
 
-# ASK USER IF USER HAS CUSTOM FFMPEG COMMANDS. IF NOT, THEY CAN LEAVE BLANK TO USE DEFAULTS
-ffmpegCMDs = "-c:v libsvtav1 -b:v 2.25M -preset 7 -pix_fmt yuv420p10le"
-
-clear()
-print("Are you using custom ffmpeg commands? If so, directly type it here.")
-print("Leave blank if you want to use pre made from the script.")
-print("\nINFO: premade script is " + ffmpegCMDs)
-customFFmpegCMD = input("\nInput string here: ")
-
-if customFFmpegCMD == "":
-    ffmpegCMDs = ffmpegCMDs
-elif customFFmpegCMD == "debug":
-    ffmpegCMDs = "-c:v libsvtav1 -b:v 5M -preset 12 -pix_fmt yuv420p10le"
-else:
-    ffmpegCMDs = customFFmpegCMD
-
-
-
-# extract and print time in seconds (we use ffprobe here)
+# EXTRACT AND PRINT VIDEO METADATA
 out = subprocess.check_output(["ffprobe", "-v", "quiet", "-show_format", "-print_format", "json", videoPath])
 ffprobe_data = json.loads(out)
 duration = float(ffprobe_data["format"]["duration"])
 filename = str(ffprobe_data["format"]["filename"])
+videoBitrate = int(ffprobe_data["format"]["bit_rate"])
+videoColorSpace = str(ffprobe_data["format"]["pix_fmt"])
 
 clear()
 print("This video filename is " + str(filename))
 print("Total duration in seconds is " + str(duration))
+print("Video bitrate is " + str(videoBitrate))
+print("Video colour space is " + str(videoColorSpace))
+
+configureFFmpeg()
 
 
 
