@@ -85,7 +85,7 @@ def configureFFmpeg():
         print("custom codec inputted. Make sure the codec you inserted abide with the ffmpeg documentation, else encoding will fail.")
         speed = input("\nInput speed (that is valid for the codec): ")
     
-    ffmpegCMDs = "-c:v "+ codecs +" -preset "+ speed +" -b:v " + (videoBitrate/2) + " -pix_fmt yuv420p"
+    ffmpegCMDs = "-c:v "+ codecs +" -preset "+ speed +" -b:v " + str(videoBitrate/2) + " -pix_fmt yuv420p"
     print(ffmpegCMDs)
 
 
@@ -96,7 +96,7 @@ clear()
 
 
 # GET FILE INPUT
-videoPath = input("FFmpeg-3worker (Version 2 - debug code: 0401230504)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-3worker (Version 2 - debug code: 0401230507)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 
 
 
