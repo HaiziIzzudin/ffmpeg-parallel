@@ -86,7 +86,7 @@ def configureFFmpeg():
         speed = input("\nInput speed (that is valid for the codec): ")
     
     global ffmpegCMDs
-    ffmpegCMDs = "-c:v "+ codecs +" -preset "+ speed +" -b:v " + str(videoBitrate/2) + " -pix_fmt yuv420p"
+    ffmpegCMDs = "-c:v "+ codecs +" -preset "+ speed +" -b:v " + str(videoBitrate/2) + " -pix_fmt yuv420p -movflags use_metadata_tags"
     print(ffmpegCMDs)
 
 
@@ -97,7 +97,7 @@ clear()
 
 
 # GET FILE INPUT
-videoPath = input("FFmpeg-3worker (Version 2 - debug code: 0401230513)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-3worker (Version 2 - debug code: 0401230609)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 
 
 
@@ -156,7 +156,7 @@ g = -1
 for e in wFile:
     g += 1
     f = open( e , "a")
-    f.write("ffmpeg -ss " + SSAr[g] + " -i " + videoPath +" "+ ffmpegCMDs +" -an -t "+ w2sT +" "+ fileFragExt[g])
+    f.write("ffmpeg -ss " + SSAr[g] + " -i " + videoPath +" "+ ffmpegCMDs +" -an -movflags use_metadata_tags -t "+ w2sT +" "+ fileFragExt[g])
     f.close()
 
 
@@ -324,7 +324,7 @@ else:
     
     af = open("audioexct.sh" , "a")
 
-af.write("ffmpeg -nostats -nostdin -hide_banner -loglevel quiet -i "+ videoPath +" -vn -c:a aac -b:a 320k " + aacPath)
+af.write("ffmpeg -nostats -nostdin -hide_banner -loglevel quiet -i "+ videoPath +" -vn -c:a aac -b:a 320k -movflags use_metadata_tags " + aacPath)
 af.close()
 
 
@@ -348,7 +348,7 @@ else:
 
 outConcatPlusAudio = homedir + DesktopDir + agFnameNoExt + "_AV1.mp4"
 
-af.write("ffmpeg -nostats -nostdin -hide_banner -loglevel quiet -f concat -safe 0 -i concatList.txt -i "+ aacPath +" -c copy " + outConcatPlusAudio)
+af.write("ffmpeg -nostats -nostdin -hide_banner -loglevel quiet -f concat -safe 0 -i concatList.txt -i "+ aacPath +" -c copy -movflags use_metadata_tags " + outConcatPlusAudio)
 af.close()
 
 
