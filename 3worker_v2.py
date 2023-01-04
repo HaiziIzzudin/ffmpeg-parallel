@@ -85,6 +85,7 @@ def configureFFmpeg():
         print("custom codec inputted. Make sure the codec you inserted abide with the ffmpeg documentation, else encoding will fail.")
         speed = input("\nInput speed (that is valid for the codec): ")
     
+    global ffmpegCMDs
     ffmpegCMDs = "-c:v "+ codecs +" -preset "+ speed +" -b:v " + str(videoBitrate/2) + " -pix_fmt yuv420p"
     print(ffmpegCMDs)
 
