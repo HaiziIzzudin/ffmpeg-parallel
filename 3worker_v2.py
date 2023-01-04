@@ -97,7 +97,7 @@ clear()
 
 
 # GET FILE INPUT
-videoPath = input("FFmpeg-3worker (Version 2 - debug code: 0401230507)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-3worker (Version 2 - debug code: 0401230513)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 
 
 
