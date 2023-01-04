@@ -71,15 +71,6 @@ def configureFFmpeg():
         print("(This metrics is based on system: AMD Ryzen 5 6600H on max TDP)")
         speed = input("\nInput valid string only (ultrafast, veryfast, fast, medium, slow, veryslow): ")
 
-    elif codecs == 'debug':
-
-        print("DEBUG SELECTED.")
-        print("\nWARNING === WARNING === WARNING === WARNING === WARNING === WARNING === WARNING === WARNING === WARNING === WARNING ==\n")
-        print("ONLY USE THIS IF YOU ARE HAIZI IZZUDIN/ DEVS THAT HANDS ON THIS CODE.")
-        print("THIS OPTION ONLY TO USE FOR NO COMPRESSION ENCODING AND TO TEST FILE DIRECTORY AND WRITING.")
-        print("THIS OPTION WILL NOT YIELD TO A REAL WORLD ENCODING.")
-        print("ENCODING WILL NOW SET TO THE FASTEST.")
-
     else:
 
         print("custom codec inputted. Make sure the codec you inserted abide with the ffmpeg documentation, else encoding will fail.")
@@ -97,7 +88,7 @@ clear()
 
 
 # GET FILE INPUT
-videoPath = input("FFmpeg-3worker (Version 2 - debug code: 0401230609)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-3worker (Version 2 - debug code: 0401230610)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 
 
 
