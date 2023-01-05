@@ -58,6 +58,7 @@ def configureFFmpeg():
         print("libsvtav1 selected. Input speed to use.")
         print("TIP: Speed 12 = ~36 frames processed / second.")
         print("TIP: Speed 7 = ~20 frames processed / second.")
+        print("TIP: Speed 6 = ~17 frames processed / second.")
         print("TIP: Speed 4 = ~7 frames processed / second.")
         print("(This metrics is based on system: AMD Ryzen 5 6600H on max TDP)")
         speed = input("\nInput integer only: ")
@@ -88,7 +89,7 @@ clear()
 
 
 # GET FILE INPUT
-videoPath = input("FFmpeg-3worker (Version 2 - debug code: 0401230610)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-3worker (Version 2 - debug code: 230105-0155)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 
 
 
@@ -315,7 +316,7 @@ else:
     
     af = open("audioexct.sh" , "a")
 
-af.write("ffmpeg -nostats -nostdin -hide_banner -loglevel quiet -i "+ videoPath +" -vn -c:a aac -b:a 320k -movflags use_metadata_tags " + aacPath)
+af.write("ffmpeg -nostats -nostdin -hide_banner -loglevel quiet -i "+ videoPath +" -vn -c:a aac -b:a 256k -filter:a dynaudnorm -movflags use_metadata_tags " + aacPath)
 af.close()
 
 
