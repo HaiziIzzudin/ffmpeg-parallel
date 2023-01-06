@@ -81,7 +81,7 @@ def configureFFmpeg():
     print("Enter in bitrate to use for your encoding.")
     print("Leave blank to set video bit rate automatically (original footage bit rate / 2)")
     print("TIP: This is functional if you are converting from lossless like Apple ProRes Codec")
-    videoBitrate = input("Input integer in bytes (CONVERT: 1 kb = 1000 b): ")
+    videoBitrate = input("Input integer in bytes (you can put unit like: k = kilobit, M = megabit): ")
     global ffmpegCMDs
 
     if videoBitrate == '':
@@ -102,7 +102,7 @@ clear()
 
 
 # GET FILE INPUT
-videoPath = input("FFmpeg-3worker (Version 2 - debug code: 230106-0224)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-3worker (Version 2 - debug code: 230106-0228)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 
 
 
