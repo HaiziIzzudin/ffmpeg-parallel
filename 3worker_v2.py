@@ -86,7 +86,7 @@ def configureFFmpeg():
 
     if videoBitrate == '':
         
-        ffmpegCMDs = "-c:v "+ codecs +" -preset "+ speed +" -b:v " + str(videoBitrate/2) + " -pix_fmt yuv420p -movflags use_metadata_tags"
+        ffmpegCMDs = "-c:v "+ codecs +" -preset "+ speed +" -b:v " + str(int(videoBitrate)/2) + " -pix_fmt yuv420p -movflags use_metadata_tags"
     
     else:
         
@@ -102,7 +102,7 @@ clear()
 
 
 # GET FILE INPUT
-videoPath = input("FFmpeg-parallel (Version 2 - debug code: 230106-0519)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-parallel (Version 2 - debug code: 230106-0928)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 
 
 
