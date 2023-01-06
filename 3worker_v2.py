@@ -81,16 +81,14 @@ def configureFFmpeg():
     print("Enter in bitrate to use for your encoding.")
     print("Leave blank to set video bit rate automatically (original footage bit rate / 2)")
     print("TIP: This is functional if you are converting from lossless like Apple ProRes Codec")
-    videoBitrate = input("Input integer in bytes (you can put unit like: k = kilobit, M = megabit): ")
+    videoBitrateOutput = input("Input integer in bytes (you can put unit like: k = kilobit, M = megabit): ")
     global ffmpegCMDs
 
-    if videoBitrate == None:
+    if not videoBitrateOutput:
         
-        ffmpegCMDs = "-c:v "+ codecs +" -preset "+ speed +" -b:v " + str((videoBitrate)/2) + " -pix_fmt yuv420p -movflags use_metadata_tags"
+        videoBitrateOutput = (videoBitrate/2)
     
-    else:
-        
-        ffmpegCMDs = "-c:v "+ codecs +" -preset "+ speed +" -b:v " + str(videoBitrate) + " -pix_fmt yuv420p -movflags use_metadata_tags"
+    ffmpegCMDs = "-c:v "+ codecs +" -preset "+ speed +" -b:v " + str(videoBitrateOutput) + " -pix_fmt yuv420p -movflags use_metadata_tags"
     
     print(ffmpegCMDs)
 
@@ -102,7 +100,7 @@ clear()
 
 
 # GET FILE INPUT
-videoPath = input("FFmpeg-parallel (Version 2 - debug code: 230106-0940)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-parallel (Version 2 - debug code: 230106-1000)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 
 
 
