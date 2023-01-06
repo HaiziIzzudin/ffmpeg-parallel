@@ -100,7 +100,7 @@ clear()
 
 
 # GET FILE INPUT
-videoPath = input("FFmpeg-parallel (Version 2 - debug code: 230106-1009)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-parallel (Version 2 - debug code: 230107-1210)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 
 
 
