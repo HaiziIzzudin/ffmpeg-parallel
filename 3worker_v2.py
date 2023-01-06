@@ -67,8 +67,8 @@ def configureFFmpeg():
 
         print("libx265 selected. Input speed to use.")
         print("TIP: Speed 'veryfast' = ~25 frames processed / second.")
-        print("TIP: Speed 'medium' = ~18 frames processed / second.")
-        print("TIP: Speed 'veryslow' = ~2 frames processed / second.")
+        print("TIP: Speed 'medium' = ~5 frames processed / second.")
+        print("TIP: Speed 'slow' = ~1.7 frames processed / second.")
         print("(This metrics is based on system: AMD Ryzen 5 6600H on max TDP. Your frame processed can vary between system, CPU and footage complexity.)")
         speed = input("\nInput valid string only (ultrafast, veryfast, fast, medium, slow, veryslow): ")
 
@@ -102,7 +102,7 @@ clear()
 
 
 # GET FILE INPUT
-videoPath = input("FFmpeg-3worker (Version 2 - debug code: 230106-0228)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-parallel (Version 2 - debug code: 230106-0519)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 
 
 
