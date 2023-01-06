@@ -58,9 +58,9 @@ def configureFFmpeg():
         print("libsvtav1 selected. Input speed to use.")
         print("TIP: Speed 12 = ~36 frames processed / second.")
         print("TIP: Speed 7 = ~20 frames processed / second.")
-        print("TIP: Speed 6 = ~17 frames processed / second.")
+        print("TIP: Speed 6 = ~16 frames processed / second.")
         print("TIP: Speed 4 = ~7 frames processed / second.")
-        print("(This metrics is based on system: AMD Ryzen 5 6600H on max TDP)")
+        print("(This metrics is based on system: AMD Ryzen 5 6600H on max TDP. Your frame processed can vary between system, CPU and footage complexity.)")
         speed = input("\nInput integer only: ")
 
     elif codecs == 'libx265':
@@ -69,7 +69,7 @@ def configureFFmpeg():
         print("TIP: Speed 'veryfast' = ~25 frames processed / second.")
         print("TIP: Speed 'medium' = ~18 frames processed / second.")
         print("TIP: Speed 'veryslow' = ~2 frames processed / second.")
-        print("(This metrics is based on system: AMD Ryzen 5 6600H on max TDP)")
+        print("(This metrics is based on system: AMD Ryzen 5 6600H on max TDP. Your frame processed can vary between system, CPU and footage complexity.)")
         speed = input("\nInput valid string only (ultrafast, veryfast, fast, medium, slow, veryslow): ")
 
     else:
@@ -77,8 +77,21 @@ def configureFFmpeg():
         print("custom codec inputted. Make sure the codec you inserted abide with the ffmpeg documentation, else encoding will fail.")
         speed = input("\nInput speed (that is valid for the codec): ")
     
+    clear()
+    print("Enter in bitrate to use for your encoding.")
+    print("Leave blank to set video bit rate automatically (original footage bit rate / 2)")
+    print("TIP: This is functional if you are converting from lossless like Apple ProRes Codec")
+    videoBitrate = input("Input integer in bytes (CONVERT: 1 kb = 1000 b): ")
     global ffmpegCMDs
-    ffmpegCMDs = "-c:v "+ codecs +" -preset "+ speed +" -b:v " + str(videoBitrate/2) + " -pix_fmt yuv420p -movflags use_metadata_tags"
+
+    if videoBitrate == '':
+        
+        ffmpegCMDs = "-c:v "+ codecs +" -preset "+ speed +" -b:v " + str(videoBitrate/2) + " -pix_fmt yuv420p -movflags use_metadata_tags"
+    
+    else:
+        
+        ffmpegCMDs = "-c:v "+ codecs +" -preset "+ speed +" -b:v " + str(videoBitrate) + " -pix_fmt yuv420p -movflags use_metadata_tags"
+    
     print(ffmpegCMDs)
 
 
