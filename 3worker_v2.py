@@ -100,7 +100,7 @@ clear()
 
 
 # GET FILE INPUT
-videoPath = input("FFmpeg-parallel (Version 2 - debug code: 230106-1000)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-parallel (Version 2 - debug code: 230106-1009)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 
 
 
@@ -399,7 +399,7 @@ if option == "y":
         os.remove(ai)
     
     os.remove(aacPath)
-    os.remove("3worker.py")
+    os.remove("3worker_v2.py")
 
 elif option == "n":
     
