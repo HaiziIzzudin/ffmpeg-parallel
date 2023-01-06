@@ -86,8 +86,14 @@ def configureFFmpeg():
 
     if not videoBitrateOutput:
         
-        videoBitrateOutput = (videoBitrate/2)
-    
+        if codecs == "libx265":
+
+            videoBitrateOutput = (videoBitrate/2)
+
+        elif codecs == "libsvtav1":
+
+            videoBitrateOutput = ((videoBitrate/2)/2)
+        
     ffmpegCMDs = "-c:v "+ codecs +" -preset "+ speed +" -b:v " + str(videoBitrateOutput) + " -pix_fmt yuv420p -movflags use_metadata_tags"
     
     print(ffmpegCMDs)
