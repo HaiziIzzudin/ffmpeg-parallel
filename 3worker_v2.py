@@ -82,14 +82,26 @@ def configureFFmpeg():
     print("Leave blank to set video bit rate automatically (original footage bit rate / 2)")
     print("TIP: This is functional if you are converting from lossless like Apple ProRes Codec")
     videoBitrateOutput = input("Input integer in bytes (you can put unit like: k = kilobit, M = megabit): ")
-    global ffmpegCMDs
 
     if not videoBitrateOutput:
         
         videoBitrateOutput = (videoBitrate/2)
         
-    ffmpegCMDs = "-c:v "+ codecs +" -preset "+ speed +" -b:v " + str(videoBitrateOutput) + " -pix_fmt yuv420p -movflags use_metadata_tags"
-    
+    clear()
+    print("Enter in frame rate. Leave blank to use default frame rate.")
+    print("TIP: some video recording has variable frame rate. This can cause problem on some editors and playback.")
+    print("TIP: Best practice is to use whole numbers (not float).")
+    videoFPSOutput = input("Input integer: ")
+    global ffmpegCMDs
+
+    if not videoFPSOutput:
+        
+        ffmpegCMDs = "-c:v "+ codecs +" -preset "+ speed +" -b:v " + str(videoBitrateOutput) + " -pix_fmt yuv420p -movflags use_metadata_tags"
+        
+    else:
+
+        ffmpegCMDs = "-c:v "+ codecs +" -preset "+ speed +" -b:v " + str(videoBitrateOutput) + " -r "+ videoFPSOutput +" -pix_fmt yuv420p -movflags use_metadata_tags"
+
     print(ffmpegCMDs)
 
 
@@ -100,7 +112,7 @@ clear()
 
 
 # GET FILE INPUT
-videoPath = input("FFmpeg-parallel (Version 2 - debug code: 230107-1210)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-parallel (Version 2 - debug code: 230107-0112)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 
 
 
@@ -124,7 +136,7 @@ configureFFmpeg()
 w1ss = str(datetime.timedelta(seconds = (0/2) * duration))
 w2sT = str(datetime.timedelta(seconds = (1/2) * duration))
 SSAr = [w1ss,w2sT]
-print("\n\n3 start point of this media is",SSAr,"\nDuration from start point is",w2sT)
+print("\n\nTwo (2) start point of this media is",SSAr,"\nDuration from start point is",w2sT)
 
 
 
