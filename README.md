@@ -36,6 +36,11 @@ Run command below in BASH
 curl -fsSL https://raw.githubusercontent.com/HaiziIzzudin/ffmpeg-parallel/main/3worker_v2.py >> 3worker_v2.py; python3 ./3worker_v2.py
 ```
 
+## TEST UNSTABLE BUILD
+```
+curl -fsSL https://raw.githubusercontent.com/HaiziIzzudin/ffmpeg-parallel/main/parallel_v3.py >> parallel_v3.py; python3 ./parallel_v3.py
+```
+
 ## CHANGELOGS
 ### Plan on Version 4
 - Program can now detect threads count, and allocate automatically; OR maybe...
@@ -55,6 +60,5 @@ curl -fsSL https://raw.githubusercontent.com/HaiziIzzudin/ffmpeg-parallel/main/3
 ### Version 1
 - Initial release
 
-```
-curl -fsSL https://raw.githubusercontent.com/HaiziIzzudin/ffmpeg-parallel/main/parallel_v3.py >> parallel_v3.py; python3 ./parallel_v3.py
-```
+
+
