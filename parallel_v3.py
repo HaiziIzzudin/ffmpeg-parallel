@@ -4,6 +4,7 @@ import datetime
 import os
 import time
 import psutil
+import os.path
 from glob import glob
 from os import system, name
 
@@ -42,6 +43,8 @@ def checkIfProcessRunning(processName):
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
     return False;
+
+
 
 def configureFFmpeg():
     
@@ -106,13 +109,62 @@ def configureFFmpeg():
 
 
 
+def interruptWizard():
+
+    clear()
+    for ba in fileFragExt:
+        
+        if os.path.exists(ba) == True:
+        
+            print("Old file "+ ba +" exists. This may exist due to interrupted encoding before.")
+            contEncodeOption = print("OFFER: Do you want program to continue encoding this file? [y/N]")
+
+            if variable.lower(contEncodeOption) == "y":
+
+                print("INFO: Continuing encode from older session...")
+
+                # GET OLD FRAGMENTED ENCODE DURATION
+                out = subprocess.check_output(["ffprobe", "-v", "quiet", "-show_format", "-print_format", "json", ba])
+                ffprobe_data = json.loads(out)
+                duration = float(ffprobe_data["format"]["duration"])
+                videoBitrate = int(ffprobe_data["format"]["bit_rate"])
+                codecs = str(ffprobe_data["streams"]["encoder"])
+                input(codecs)
+
+                # MAKE VARIABLE TIMESTAMP FOR THE INTERRUPT FRAGMENT
+                w1ss = str(datetime.timedelta(seconds = (0/2) * duration))
+                w2sT = str(datetime.timedelta(seconds = (1/2) * duration))
+                SSAr = [w1ss,w2sT]
+                print("\n\nTwo (2) start point of this media is",SSAr,"\nDuration from start point is",w2sT)
+
+                # CREATE NEW WORKER BASED ON DATA ABOVE
+                if name == 'nt':
+                    
+                    wFile = ["w1_interrupt.bat","w2_interrupt.bat"]
+                    wRunner = "runner_interrupt.bat"
+                
+                else:
+                    
+                    wFile = ["w1_interrupt.sh","w2_interrupt.sh"]
+                    wRunner = "runner_interrupt.sh"
+
+                f = open( e , "a")
+                f.write("ffmpeg -ss " +duration+ " -i " + videoPath +" "+ ffmpegCMDs +" -an -movflags use_metadata_tags -t "+ w2sT +" "+ fileFragExt[g])
+                f.close()
+
+            else:
+
+                print("INFO: Old fragment encoding abandoned. Removing and creating new worker...")
+
+
+
 # CLEAR TERMINAL
 clear()
 
 
 
 # GET FILE INPUT
-videoPath = input("FFmpeg-parallel (Version 2 - debug code: 230107-0112)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-parallel (Version 2 - debug code: 230110-0702)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 
 
 
@@ -146,17 +198,17 @@ videoFileNameExt = videoFileNameAr[1] # filename only
 
 Out1 = (videoFileNameExt[:-4] + "_frag1.mkv")
 Out2 = (videoFileNameExt[:-4] + "_frag2.mkv")
-fileFragExt = [Out1, Out2] # this one baru filename + frag + extension Array
+fileFragExt = [Out1, Out2] # this one baru filename + "_frag#" + extension Array
+
+interruptWizard()
 
 print("\nProcessed fragments will be named as following:")
-ee = -1
 for e in fileFragExt:
-    ee += 1
     print("\t" + e)
 
 
 
-## declare worker name for nt and posix
+## DECLARE WORKER FOR NT AND POSIX
 if name == 'nt':
     wFile = ["w1.bat","w2.bat"]
     wRunner = "runner.bat"
