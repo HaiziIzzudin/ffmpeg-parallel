@@ -109,9 +109,22 @@ def configureFFmpeg():
 
 
 
+def getFilenameplusExt():
+    
+    videoFileNameAr = os.path.split(videoPath) #array
+    videoFileNameExt = videoFileNameAr[1] # filename only
+
+    Out1 = (videoFileNameExt[:-4] + "_frag1.mkv")
+    Out2 = (videoFileNameExt[:-4] + "_frag2.mkv")
+    global fileFragExt
+    fileFragExt = [Out1, Out2] # this one baru filename + "_frag#" + extension Array
+
+
+
 def interruptWizard():
 
     clear()
+    getFilenameplusExt()
     for ba in fileFragExt:
         
         if os.path.exists(ba) == True:
@@ -164,7 +177,8 @@ clear()
 
 
 # GET FILE INPUT
-videoPath = input("FFmpeg-parallel (Version 2 - debug code: 230110-0708)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-parallel (Version 3 !UNSTABLE! - debug code: 230110-0714)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+interruptWizard()
 
 
 
@@ -192,15 +206,9 @@ print("\n\nTwo (2) start point of this media is",SSAr,"\nDuration from start poi
 
 
 
-# GET FILENAME+EXTENSION ONLY, NO PATH
-videoFileNameAr = os.path.split(videoPath) #array
-videoFileNameExt = videoFileNameAr[1] # filename only
+getFilenameplusExt()
 
-Out1 = (videoFileNameExt[:-4] + "_frag1.mkv")
-Out2 = (videoFileNameExt[:-4] + "_frag2.mkv")
-fileFragExt = [Out1, Out2] # this one baru filename + "_frag#" + extension Array
 
-interruptWizard()
 
 print("\nProcessed fragments will be named as following:")
 for e in fileFragExt:
