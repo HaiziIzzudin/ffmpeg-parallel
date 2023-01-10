@@ -130,9 +130,9 @@ def interruptWizard():
         if os.path.exists(ba) == True:
         
             print("Old file "+ ba +" exists. This may exist due to interrupted encoding before.")
-            contEncodeOption = print("OFFER: Do you want program to continue encoding this file? [y/N]")
+            contEncodeOption = print("OFFER: Do you want program to continue encoding this file? [y/n] (case-sensitive)")
 
-            if contEncodeOption.lower() == "y":
+            if contEncodeOption == "y":
 
                 print("INFO: Continuing encode from older session...")
 
@@ -177,7 +177,7 @@ clear()
 
 
 # GET FILE INPUT
-videoPath = input("FFmpeg-parallel (Version 3 !UNSTABLE! - debug code: 230110-0714)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-parallel (Version 3 !UNSTABLE! - debug code: 230110-0719)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 interruptWizard()
 
 
