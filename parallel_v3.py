@@ -130,19 +130,21 @@ def interruptWizard():
         if os.path.exists(ba) == True:
         
             print("Old file "+ ba +" exists. This may exist due to interrupted encoding before.")
-            contEncodeOption = input("OFFER: Do you want program to continue encoding this file? [y/n] (case-sensitive)")
+            ##contEncodeOption = input("OFFER: Do you want program to continue encoding this file? [y/n] (case-sensitive)")
+            contEncodeOption = "y"
 
             if contEncodeOption == "y":
 
                 print("INFO: Continuing encode from older session...")
 
                 # GET OLD FRAGMENTED ENCODE DURATION
-                out = subprocess.check_output(["ffprobe", "-v", "quiet", "-show_format", "-show_streams", "-print_format", "json", ba])
+                out = subprocess.check_output(["ffprobe", "-v", "quiet", "-show_format", "-show_entries", "stream_tags=ENCODER", "-print_format", "json", ba])
                 ffprobe_data = json.loads(out)
                 duration = float(ffprobe_data["format"]["duration"])
                 videoBitrate = int(ffprobe_data["format"]["bit_rate"])
-                codecs = (ffprobe_data["streams"]["encoder"])
-                input(codecs)
+                codecs = str(ffprobe_data['streams'][0]['tags']['ENCODER'])
+                codecsArr = codecs.split(' ')
+                print(codecsArr[1])
 
                 # MAKE VARIABLE TIMESTAMP FOR THE INTERRUPT FRAGMENT
                 w1ss = str(datetime.timedelta(seconds = (0/2) * duration))
@@ -177,7 +179,8 @@ clear()
 
 
 # GET FILE INPUT
-videoPath = input("FFmpeg-parallel (Version 3 !UNSTABLE! - debug code: 230110-0732)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+## videoPath = input("FFmpeg-parallel (Version 3 !UNSTABLE! - debug code: 230110-0732)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = r"/home/haizi/Raw_Video/GettingOverIt_2-FzcoMaZ7lXE.mp4"
 interruptWizard()
 
 
