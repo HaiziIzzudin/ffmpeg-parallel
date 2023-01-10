@@ -141,7 +141,7 @@ def interruptWizard():
                 ffprobe_data = json.loads(out)
                 duration = float(ffprobe_data["format"]["duration"])
                 videoBitrate = int(ffprobe_data["format"]["bit_rate"])
-                codecs = str(ffprobe_data["streams"]["encoder"])
+                codecs = (ffprobe_data["streams"]["encoder"])
                 input(codecs)
 
                 # MAKE VARIABLE TIMESTAMP FOR THE INTERRUPT FRAGMENT
@@ -177,7 +177,7 @@ clear()
 
 
 # GET FILE INPUT
-videoPath = input("FFmpeg-parallel (Version 3 !UNSTABLE! - debug code: 230110-0728)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-parallel (Version 3 !UNSTABLE! - debug code: 230110-0732)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 interruptWizard()
 
 
