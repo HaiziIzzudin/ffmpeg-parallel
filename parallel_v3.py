@@ -119,12 +119,12 @@ def interruptWizard():
             print("Old file "+ ba +" exists. This may exist due to interrupted encoding before.")
             contEncodeOption = print("OFFER: Do you want program to continue encoding this file? [y/N]")
 
-            if variable.lower(contEncodeOption) == "y":
+            if contEncodeOption.lower() == "y":
 
                 print("INFO: Continuing encode from older session...")
 
                 # GET OLD FRAGMENTED ENCODE DURATION
-                out = subprocess.check_output(["ffprobe", "-v", "quiet", "-show_format", "-print_format", "json", ba])
+                out = subprocess.check_output(["ffprobe", "-v", "quiet", "-show_format", "-show_streams", "-print_format", "json", ba])
                 ffprobe_data = json.loads(out)
                 duration = float(ffprobe_data["format"]["duration"])
                 videoBitrate = int(ffprobe_data["format"]["bit_rate"])
@@ -164,7 +164,7 @@ clear()
 
 
 # GET FILE INPUT
-videoPath = input("FFmpeg-parallel (Version 2 - debug code: 230110-0702)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
+videoPath = input("FFmpeg-parallel (Version 2 - debug code: 230110-0708)\ngithub.com/HaiziIzzudin\n\nDrag video file into this program:\n")
 
 
 
