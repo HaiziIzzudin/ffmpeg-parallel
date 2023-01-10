@@ -121,55 +121,112 @@ def getFilenameplusExt():
 
 
 
+def getFilenameplusExtforInterrupt():
+
+    videoFileNameAr = os.path.split(videoPath) #array
+    videoFileNameExt = videoFileNameAr[1] # filename only
+
+    OutInterr1 = (videoFileNameExt[:-4] + "_frag1_interr.mkv")
+    OutInterr2 = (videoFileNameExt[:-4] + "_frag2_interr.mkv")
+    global fileFragInterrExt
+    fileFragInterrExt = [OutInterr1, OutInterr2] # this one baru filename + "_frag_interr#" + extension Array
+
+
+
+def findTimestamp():
+
+    out1 = subprocess.check_output(["ffprobe", "-v", "quiet", "-show_format", "-show_streams", "-print_format", "json", videoPath])
+    ffprobe_data1 = json.loads(out1)
+    global durationOld
+    durationOld = float(ffprobe_data1["format"]["duration"])
+
+    w1ss = str(datetime.timedelta(seconds = (0/2) * durationOld))
+    w2sT = str(datetime.timedelta(seconds = (1/2) * durationOld))
+    w3ff = str(datetime.timedelta(seconds = (2/2) * durationOld))
+
+    SSAr = [w1ss,w2sT]
+
+    global timestampInterrupt
+    timestampInterrupt = [w2sT,w3ff]
+
+    print("\n\nTwo (2) start point of this media is",SSAr,"\nDuration from start point is",w2sT)
+
+
+
 def interruptWizard():
 
     clear()
     getFilenameplusExt()
-    for ba in fileFragExt:
+    testPath = (os.path.exists(fileFragExt[0]) or os.path.exists(fileFragExt[1]))
+
+    if testPath == True:
         
-        if os.path.exists(ba) == True:
-        
-            print("Old file "+ ba +" exists. This may exist due to interrupted encoding before.")
-            ##contEncodeOption = input("OFFER: Do you want program to continue encoding this file? [y/n] (case-sensitive)")
-            contEncodeOption = "y"
+        print("Old file "+ fileFragExt[0] +" & "+ fileFragExt[1] +" exists. This may exist due to interrupted encoding before.")
+        ##contEncodeOption = input("OFFER: Do you want program to continue encoding this file? [y/n] (case-sensitive)")
+        contEncodeOption = "y"
 
-            if contEncodeOption == "y":
+        if contEncodeOption == "y":
 
-                print("INFO: Continuing encode from older session...")
+            print("INFO: Continuing encode from older session...")
 
-                # GET OLD FRAGMENTED ENCODE DURATION
-                out = subprocess.check_output(["ffprobe", "-v", "quiet", "-show_format", "-show_entries", "stream_tags=ENCODER", "-print_format", "json", ba])
-                ffprobe_data = json.loads(out)
-                duration = float(ffprobe_data["format"]["duration"])
-                videoBitrate = int(ffprobe_data["format"]["bit_rate"])
-                codecs = str(ffprobe_data['streams'][0]['tags']['ENCODER'])
-                codecsArr = codecs.split(' ')
-                print(codecsArr[1])
+            # GET OLD FRAGMENTED ENCODE DURATION
+            out = subprocess.check_output(["ffprobe", "-v", "quiet", "-show_format", "-show_streams", "-print_format", "json", fileFragExt[0]])
+            ffprobe_data = json.loads(out)
+            global duration
+            duration = float(ffprobe_data["format"]["duration"])
+            videoBitrate = int(ffprobe_data["format"]["bit_rate"])
+            codecs = str(ffprobe_data['streams'][0]['tags']['ENCODER'])
+            videoFPS = str(ffprobe_data['streams'][0]['avg_frame_rate'])
+            codecsArr = codecs.split(' ')
+            videoFPSOutput = videoFPS.split('/')
 
-                # MAKE VARIABLE TIMESTAMP FOR THE INTERRUPT FRAGMENT
-                w1ss = str(datetime.timedelta(seconds = (0/2) * duration))
-                w2sT = str(datetime.timedelta(seconds = (1/2) * duration))
-                SSAr = [w1ss,w2sT]
-                print("\n\nTwo (2) start point of this media is",SSAr,"\nDuration from start point is",w2sT)
+            speed = input("\nEnter preset to use: ")
 
-                # CREATE NEW WORKER BASED ON DATA ABOVE
-                if name == 'nt':
+            # CREATE NEW WORKER BASED ON DATA ABOVE
+            if name == 'nt':
                     
-                    wFile = ["w1_interrupt.bat","w2_interrupt.bat"]
-                    wRunner = "runner_interrupt.bat"
+                wFile = ["w1_interrupt.bat","w2_interrupt.bat"]
                 
-                else:
+            else:
                     
-                    wFile = ["w1_interrupt.sh","w2_interrupt.sh"]
-                    wRunner = "runner_interrupt.sh"
+                wFile = ["w1_interrupt.sh","w2_interrupt.sh"]
 
-                f = open( e , "a")
-                f.write("ffmpeg -ss " +duration+ " -i " + videoPath +" "+ ffmpegCMDs +" -an -movflags use_metadata_tags -t "+ w2sT +" "+ fileFragExt[g])
+            ffmpegCMDs = "-c:v "+ codecsArr[1] +" -preset "+ speed +" -b:v " + str(videoBitrate) + " -r "+ videoFPSOutput[0] +" -pix_fmt yuv420p -movflags use_metadata_tags"
+
+            print("\n" + ffmpegCMDs)
+
+            findTimestamp()
+            getFilenameplusExtforInterrupt()
+
+            bc = -1
+            for bb in wFile:
+
+                bc += 1
+                f = open( bb , "a")
+                f.write("ffmpeg -ss "+ str(datetime.timedelta(seconds = (2/2) * duration)) +" -i " + videoPath +" "+ ffmpegCMDs +" -an -movflags use_metadata_tags -to "+ str(timestampInterrupt[bc]) +" "+ fileFragInterrExt[bc])
                 f.close()
 
-            else:
+            ## FLAG FOR DETERMINE CREATE WORKER FILE
+            interruptFlag = True
+            print(interruptFlag)
 
-                print("INFO: Old fragment encoding abandoned. Removing and creating new worker...")
+            exit()
+
+        else:
+
+            print("INFO: Old fragment encoding abandoned. Removing and creating new worker...")
+
+            for ah in fileFragExt:
+
+                os.remove(ah)
+
+            for ai in listRemoval:
+
+                os.remove(ai)
+
+            os.remove(aacPath)
+
+            interruptFlag = False
 
 
 
@@ -202,10 +259,7 @@ configureFFmpeg()
 
 
 # now, find its HH:MM:SS for each worker (by fraction)
-w1ss = str(datetime.timedelta(seconds = (0/2) * duration))
-w2sT = str(datetime.timedelta(seconds = (1/2) * duration))
-SSAr = [w1ss,w2sT]
-print("\n\nTwo (2) start point of this media is",SSAr,"\nDuration from start point is",w2sT)
+findTimestamp()
 
 
 
