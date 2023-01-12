@@ -15,6 +15,7 @@ if name == 'nt': # for windows
 
 
 
+
 def clear():
     if name == 'nt': # for windows
         _ = system('cls')
@@ -289,35 +290,48 @@ def divitFFprocess():
             os.sched_setaffinity(s, AffArr[u])
             u += 1
             
-    # GET CPU AFFINITY FOR EACH FFMPEG WORKER (THIS IS AFTER APPLYING CPU MASKING)
-
-
-
-
     # LOOP CHECK IF FFMPEG PROCESS IF RUNNING, IF TRUE THEN DON'T PROCEED TO NEXT STAGE
-    while checkIfProcessRunning('ffmpeg') == True:
-    
-        clear()
-        print("\nAffinity set!")
-        print('INFO: FFmpeg process detected, halting process temporarily until encoding finished.\n')
-        
-        if name == 'nt':
-    
-            cc = 0
-            for w in PIDArr:
-                
-                handle = win32api.OpenProcess(win32con.PROCESS_ALL_ACCESS, True, PIDArr[cc])
-                y = win32process.GetProcessAffinityMask(handle)
-                print("\nFFmpeg PID "+ str(w) +" is running on thread "+ str(y))
-                cc += 1
+    ffProc = True
 
+    while ffProc == True:
+
+        if checkIfProcessRunning('ffmpeg'):
+            
+            ffProc = True
+            clear()
+            print('INFO: FFmpeg process detected, halting process temporarily until encoding finished.\n')        
+            print("\nINFO: While you're on it, please check CPU affinity masking in\nNT: Task Manager / UNIX: taskset -cp [PID]\nif its uses correct masking.\n\n")
+    
         else:
-    
-            y = [os.sched_getaffinity(p), os.sched_getaffinity(q)]
-    
-            for w in PIDArr:
         
-                print("\nFFmpeg PID "+ str(w) +" is running on thread "+ str(y))
+            ffProc = False
+            print('INFO: FFmpeg process not detected anymore. Proceeding to next process...\n\n')
+            
+            
+
+            
+def createAAC():
+    
+    print("Encoding AAC file...")
+    AACfn = (splitFilename[0] + ".aac")
+    subprocess.run('ffmpeg -nostats -nostdin -hide_banner -loglevel quiet -i '+ filePath +' -vn -c:a aac -b:a 256k -filter:a dynaudnorm -movflags use_metadata_tags \"' + splitFilename[0] + '.aac\"')
+    
+    
+    
+
+def concatProc():
+    
+    concatListAr = [filenameDict[0], filenameDict[100], filenameDict[1], filenameDict[101]]
+    f = open("concatList.txt", "a")
+    
+    for ae in concatListAr:
+        
+        f.write("file '"+ ae + "'\n")
+        
+    f.close()
+    print("Concatenating...")
+    concatFN = (splitFilename[0] + ".mp4")
+    subprocess.run('ffmpeg -nostats -nostdin -hide_banner -loglevel quiet -f concat -safe 0 -i concatList.txt -i '+ aacPath +' -c copy -movflags use_metadata_tags \"' + splitFilename[0] + '.mp4\"')
     
 
 
@@ -349,6 +363,12 @@ time.sleep(3)
 
 # DIVIT FFMPEG PROCESS TO ITS CERTAIN CPU AFFINITY
 divitFFprocess()
+
+# CREATE NEW AAC FILE BASED ON SOURCE
+createAAC()
+
+# NOW CONCAT ALL THESE FILE INTO ONE!
+concatProc()
 
 
 
