@@ -41,7 +41,7 @@ Version 3 brings improvement under the hood from v2. This includes:
 - No more user has to install additional packages! Script has all included.
 
 Consider donating to help me buy mineral water:
-[ko-fi.com/haiziizzudin](ko-fi.com/haiziizzudin)
+[ko-fi.com/haiziizzudin](https://ko-fi.com/haiziizzudin)
 
 ### Version 2
 - Users can now choose to remove or keep temporary files. Temporary files need to be DELETED to invoke ffmpeg-parallel again at later time.
