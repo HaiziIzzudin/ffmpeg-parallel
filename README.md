@@ -38,6 +38,7 @@ Version 3 brings improvement under the hood from v2. This includes:
 - Synthetic code, cache, and user interaction improvements.
 - Uses colorama for header design.
 - Encoded file will now drop in same path as the original file resides. No more on desktop.
+- No more user has to install additional packages! Script has all included.
 
 Consider donating to help me buy mineral water:
 [ko-fi.com/haiziizzudin](ko-fi.com/haiziizzudin)
