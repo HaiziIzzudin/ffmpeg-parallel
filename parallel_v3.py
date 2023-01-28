@@ -369,6 +369,7 @@ if option == "Y":
     
     os.remove(aacPath)
     os.remove("concatList.txt")
+    os.remove("parallel_v3.py")
     clear()
 
 elif option == "N":
