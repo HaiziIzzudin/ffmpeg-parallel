@@ -1,4 +1,5 @@
-![image_2022-12-30_23-33-14](https://user-images.githubusercontent.com/79714350/210088270-1e48cc3e-e0f6-438e-9452-c44bb99dab54.png)
+![MAIN_1](https://user-images.githubusercontent.com/79714350/215285318-486b5db3-a3bf-479b-af53-0f8160533f8c.gif)
+
 
 
 # Encode with two concurrent ffmpeg process instead of one!
