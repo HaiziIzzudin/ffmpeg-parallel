@@ -26,7 +26,7 @@ You MUST and HAVE to run this command inside powershell version 6 and above. The
 irm https://raw.githubusercontent.com/HaiziIzzudin/ffmpeg-parallel/main/parallel_v3.py > parallel_v3.py; (Get-Content -path ~\parallel_v3.py) | Set-Content -Encoding utf8NoBOM -Path ~\parallel_v3.py; python ./parallel_v3.py;
 ```
 
-### Linux / UNIX equivalent (Still on v2, pls wait for me to port for linux.)
+### Linux / UNIX equivalent (Still on v2, pls wait for me to port for linux. I try to find best affordable linux VPS with DE support. If u hv suggestions, leave it in [issues](https://github.com/HaiziIzzudin/ffmpeg-parallel/issues))
 Run command below in BASH
 ```
 curl -fsSL https://raw.githubusercontent.com/HaiziIzzudin/ffmpeg-parallel/main/3worker_v2.py >> 3worker_v2.py; python3 ./3worker_v2.py
@@ -42,8 +42,8 @@ Version 3 brings improvement under the hood from v2. This includes:
 - No more user has to install additional packages! Script has all included.
 - HOTFIX 1: Remove python script file if user select to remove.
 
-Consider donating to help me buy mineral water:
-[ko-fi.com/haiziizzudin](https://ko-fi.com/haiziizzudin)
+**Consider donating! I set it as low as 1$ (~ 4.40 MYR):
+[ko-fi.com/haiziizzudin](https://ko-fi.com/haiziizzudin)**
 
 ### Version 2
 - Users can now choose to remove or keep temporary files. Temporary files need to be DELETED to invoke ffmpeg-parallel again at later time.
