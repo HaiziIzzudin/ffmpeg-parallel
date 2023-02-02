@@ -23,7 +23,7 @@ Hopefully the next update I can eliminate some of the problem above.
 ### Windows
 You MUST and HAVE to run this command inside powershell version 6 and above. The one shipped with Windows is most probably old. Get the latest PowerShell by invoking `winget install microsoft.powershell`, OR if you don't have winget, [download here](https://learn.microsoft.com/en-gb/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3#msi).
 ```
-irm https://raw.githubusercontent.com/HaiziIzzudin/ffmpeg-parallel/main/parallel_v3.py > parallel_v3.py; (Get-Content -path ~\parallel_v3.py) | Set-Content -Encoding utf8NoBOM -Path ~\parallel_v3.py; python ./parallel_v3.py;
+irm https://raw.githubusercontent.com/HaiziIzzudin/ffmpeg-parallel/main/parallel_v3-1.py > parallel_v3-1.py; (Get-Content -path ~\parallel_v3-1.py) | Set-Content -Encoding utf8NoBOM -Path ~\parallel_v3-1.py; python ./parallel_v3-1.py;
 ```
 
 ### Linux / UNIX equivalent (Still on v2, pls wait for me to port for linux. I try to find best affordable linux VPS with DE support. If u hv suggestions, leave it in [issues](https://github.com/HaiziIzzudin/ffmpeg-parallel/issues))
@@ -33,17 +33,26 @@ curl -fsSL https://raw.githubusercontent.com/HaiziIzzudin/ffmpeg-parallel/main/3
 ```
 
 ## CHANGELOGS
-### INTRODUCING VERSION 3
+### NEW: VERSION 3.1
+Version 3.1 is nothing very drastic, but it addresses some of the problem it have:
+- Video with multitrack audio will now be encoded wholesale, no encode only one stream.
+- (Your source video now must have at least one audio track, or else script will fail.)
+- AAC has been changed to m4a, to support multitrack audio support.
+- Added libx264 (H.264) as encode option.
+
+Expect version 3.2 will add linux support (idk when tho, I'm busy lately.)
+
+**Consider donating! I set it as low as 1$ (~ 4.40 MYR):
+[ko-fi.com/haiziizzudin](https://ko-fi.com/haiziizzudin)**
+
+### Version 3
 Version 3 brings improvement under the hood from v2. This includes:
 - Path will now doesn't care if its contains spaces or not.
-- Synthetic code, cache, and user interaction improvements.
+- Codes, cache, and user interaction improvements.
 - Uses colorama for header design.
 - Encoded file will now drop in same path as the original file resides. No more on desktop.
 - No more user has to install additional packages! Script has all included.
 - HOTFIX 1: Remove python script file if user select to remove.
-
-**Consider donating! I set it as low as 1$ (~ 4.40 MYR):
-[ko-fi.com/haiziizzudin](https://ko-fi.com/haiziizzudin)**
 
 ### Version 2
 - Users can now choose to remove or keep temporary files. Temporary files need to be DELETED to invoke ffmpeg-parallel again at later time.
