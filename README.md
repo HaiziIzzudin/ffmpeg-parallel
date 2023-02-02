@@ -39,6 +39,7 @@ Version 3.1 is nothing very drastic, but it addresses some of the problem it hav
 - (Your source video now must have at least one audio track, or else script will fail.)
 - AAC has been changed to m4a, to support multitrack audio support.
 - Added libx264 (H.264) as encode option.
+- Removed option to set frame rate (frankly, this will fuck up the video more. So, I let it go.)
 
 Expect version 3.2 will add linux support (idk when tho, I'm busy lately.)
 
