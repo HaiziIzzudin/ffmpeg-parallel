@@ -6,9 +6,10 @@
 This is a Python script where ffmpeg will split inputted video into 2 parts, and encode it to their own cpu affinity SIMULTANEOUSLY to utilize CPU 100%
 
 ## REQUIREMENT / DEPENDENCIES
-- ffmpeg 5.2, MUST accessible thru PATH. (Automated installation within this script will be added later on version 3.5, hopefully)
+- ffmpeg 5.2, MUST accessible thru PATH. (Automated installation within this script will be added later on version 4, hopefully)
 - python, MUST accessible in PATH
-- If you going to use Windows, please install PowerShell version 6 or above.
+- pip
+- Windows only: Please install PowerShell version 6 or above.
 
 ## IMPORTANT NOTE
 This script has been tailored for me and my machine. That's why I provide in script mode, not executable mode. Since this script is editable and open source, go ahead and change some of the parameters inside the script to match what's spec on your machine.
@@ -23,31 +24,32 @@ Hopefully the next update I can eliminate some of the problem above.
 ### Windows
 You MUST and HAVE to run this command inside powershell version 6 and above. The one shipped with Windows is most probably old. Get the latest PowerShell by invoking `winget install microsoft.powershell`, OR if you don't have winget, [download here](https://learn.microsoft.com/en-gb/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3#msi).
 ```
-irm https://raw.githubusercontent.com/HaiziIzzudin/ffmpeg-parallel/main/parallel_v3-1.py > parallel_v3-1.py; (Get-Content -path ~\parallel_v3-1.py) | Set-Content -Encoding utf8NoBOM -Path ~\parallel_v3-1.py; python ./parallel_v3-1.py;
+irm https://github.com/HaiziIzzudin/ffmpeg-parallel/raw/main/parallel_v3.2.py > ffparal.py; (Get-Content -path ~\ffparal.py) | Set-Content -Encoding utf8NoBOM -Path ~\ffparal.py; python ./ffparal.py;
 ```
 
-### Linux / UNIX equivalent (Still on v2, pls wait for me to port for linux. I try to find best affordable linux VPS with DE support. If u hv suggestions, leave it in [issues](https://github.com/HaiziIzzudin/ffmpeg-parallel/issues))
+### Linux / UNIX equivalent
 Run command below in BASH
 ```
-curl -fsSL https://raw.githubusercontent.com/HaiziIzzudin/ffmpeg-parallel/main/3worker_v2.py >> 3worker_v2.py; python3 ./3worker_v2.py
+curl -fsSL https://github.com/HaiziIzzudin/ffmpeg-parallel/raw/main/parallel_v3.2.py >> ffparal.py; python3 ./ffparal.py
 ```
 
 ## CHANGELOGS
-### NEW: VERSION 3.1
-Version 3.1 is nothing very drastic, but it addresses some of the problem it have:
+### NEW: VERSION 3.2
+3.2 brings improvement like so:
+- Added linux support.
+- Fix path quotation marks.
+
+### Version 3.1
 - Video with multitrack audio will now be encoded wholesale, no encode only one stream.
 - (Your source video now must have at least one audio track, or else script will fail.)
 - AAC has been changed to m4a, to support multitrack audio support.
 - Added libx264 (H.264) as encode option.
 - Removed option to set frame rate (frankly, this will fuck up the video more. So, I let it go.)
 
-Expect version 3.2 will add linux support (idk when tho, I'm busy lately.)
-
 **Consider donating! I set it as low as 1$ (~ 4.40 MYR):
 [ko-fi.com/haiziizzudin](https://ko-fi.com/haiziizzudin)**
 
-### Version 3
-Version 3 brings improvement under the hood from v2. This includes:
+### Version 3.0
 - Path will now doesn't care if its contains spaces or not.
 - Codes, cache, and user interaction improvements.
 - Uses colorama for header design.
