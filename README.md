@@ -30,7 +30,7 @@ irm https://github.com/HaiziIzzudin/ffmpeg-parallel/raw/main/parallel_33.py > ff
 ### Linux / UNIX equivalent
 Run command below in BASH
 ```
-curl -fsSL https://github.com/HaiziIzzudin/ffmpeg-parallel/raw/main/parallel_v3.3.py >> ffparal.py; python3 ./ffparal.py
+curl -fsSL https://github.com/HaiziIzzudin/ffmpeg-parallel/raw/main/parallel_33.py >> ffparal.py; python3 ./ffparal.py
 ```
 
 ## CHANGELOGS
