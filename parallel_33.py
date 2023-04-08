@@ -76,27 +76,17 @@ def configureFFmpeg():
     
     clear()
     header()
-    print("Enter in option\n[A] libsvtav1, or\n[B] libx264\nto use for your encoding.")
-    print("\nInput either A or B: ")
-
+    print("Type in EXACTLY:\nlibsvtav1, or\n[B] libx264\nto use for your encoding.")
+    
     if debugFlag == False:
-
-        if name == 'nt':
-            codecs = msvcrt.getch().decode('ASCII')
-        else:
-            codecs = getch.getch().decode('ASCII')
-
-        codecs = codecs.upper()
-
+        codecs = input("\nInput: ")
     else:
-        codecs = "A"
+        codecs = "libx264"
 
     clear()
     header()
 
-    if codecs == 'A':
-
-        codecs = 'libsvtav1'
+    if codecs == 'libsvtav1':
         print(codecs + " selected. Input speed to use:")
         print("\n*** TIP ***\n12 = ~36 fps\n7 = ~20 fps\n6 = ~16 fps\n4 = ~7 fps\n***********")
         if debugFlag == False:
@@ -104,13 +94,12 @@ def configureFFmpeg():
         else:
             speed = 6
 
-    elif codecs == 'B':
-
+    elif codecs == 'libx264':
         codecs = 'libx264'
         print(codecs + " selected. Type the speed parameters EXACTLY, FOLLOW CAPS:")
         print("\n*** TIP ***\n'veryfast' = ~25 fps\n'medium' = ~5 fps\n'slow' = ~1.7 fps\n***********")
         if debugFlag == False:
-            speed = print("\nInput EXACTLY either\nultrafast\nveryfast\nfast\nmedium\nslow, OR \nveryslow: ")
+            speed = input("\nInput EXACTLY either\nultrafast\nveryfast\nfast\nmedium\nslow, OR \nveryslow: ")
         else:
             speed = "veryslow"
         
