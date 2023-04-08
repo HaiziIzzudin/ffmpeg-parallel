@@ -6,7 +6,7 @@
 This is a Python script where ffmpeg will split inputted video into 2 parts, and encode it to their own cpu affinity SIMULTANEOUSLY to utilize CPU 100%
 
 ## REQUIREMENT / DEPENDENCIES
-- ffmpeg 5.2, MUST accessible thru PATH. (Automated installation within this script will be added later on version 4, hopefully)
+- ffmpeg 6, MUST accessible thru PATH. (Automated installation within this script will be added later on version 4, hopefully)
 - python, MUST accessible in PATH
 - pip
 - Windows only: Please install PowerShell version 6 or above.
@@ -34,8 +34,15 @@ curl -fsSL https://github.com/HaiziIzzudin/ffmpeg-parallel/raw/main/parallel_v3.
 ```
 
 ## CHANGELOGS
-### NEW: VERSION 3.2
-3.2 brings improvement like so:
+### **NEW: VERSION 3.3**
+Version 3.3 brings cleanup to underlying code. This includes:
+- Lesser line of code count (incl empty line).
+- Longer explaination of certain subjects has been shorten.
+
+**Consider donating! I set it as low as 1$ (~ 4.40 MYR):
+[ko-fi.com/haiziizzudin](https://ko-fi.com/haiziizzudin)**
+
+### Version 3.2
 - Added linux support.
 - Fix path quotation marks.
 
@@ -46,8 +53,6 @@ curl -fsSL https://github.com/HaiziIzzudin/ffmpeg-parallel/raw/main/parallel_v3.
 - Added libx264 (H.264) as encode option.
 - Removed option to set frame rate (frankly, this will fuck up the video more. So, I let it go.)
 
-**Consider donating! I set it as low as 1$ (~ 4.40 MYR):
-[ko-fi.com/haiziizzudin](https://ko-fi.com/haiziizzudin)**
 
 ### Version 3.0
 - Path will now doesn't care if its contains spaces or not.
