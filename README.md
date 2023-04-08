@@ -24,13 +24,13 @@ Hopefully the next update I can eliminate some of the problem above.
 ### Windows
 You MUST and HAVE to run this command inside powershell version 6 and above. The one shipped with Windows is most probably old. Get the latest PowerShell by invoking `winget install microsoft.powershell`, OR if you don't have winget, [download here](https://learn.microsoft.com/en-gb/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3#msi).
 ```
-irm https://github.com/HaiziIzzudin/ffmpeg-parallel/raw/main/parallel_v3.2.py > ffparal.py; (Get-Content -path ~\ffparal.py) | Set-Content -Encoding utf8NoBOM -Path ~\ffparal.py; python ./ffparal.py;
+irm https://github.com/HaiziIzzudin/ffmpeg-parallel/raw/main/parallel_33.py > ffparal.py; (Get-Content -path ~\ffparal.py) | Set-Content -Encoding utf8NoBOM -Path ~\ffparal.py; python ./ffparal.py;
 ```
 
 ### Linux / UNIX equivalent
 Run command below in BASH
 ```
-curl -fsSL https://github.com/HaiziIzzudin/ffmpeg-parallel/raw/main/parallel_v3.2.py >> ffparal.py; python3 ./ffparal.py
+curl -fsSL https://github.com/HaiziIzzudin/ffmpeg-parallel/raw/main/parallel_v3.3.py >> ffparal.py; python3 ./ffparal.py
 ```
 
 ## CHANGELOGS
@@ -38,6 +38,9 @@ curl -fsSL https://github.com/HaiziIzzudin/ffmpeg-parallel/raw/main/parallel_v3.
 Version 3.3 brings cleanup to underlying code. This includes:
 - Lesser line of code count (incl empty line).
 - Longer explaination of certain subjects has been shorten.
+- New script naming convention:
+    - parallel_[version_number][increment_number]-[hotfix (if available)]
+    - E.g.: parallel_33 = FFmpeg Parallel Script Version 3.3
 
 **Consider donating! I set it as low as 1$ (~ 4.40 MYR):
 [ko-fi.com/haiziizzudin](https://ko-fi.com/haiziizzudin)**
