@@ -5,6 +5,15 @@
 # Encode with two concurrent ffmpeg process instead of one!
 This is a Python script where ffmpeg will split inputted video into 2 parts, and encode it to their own cpu affinity SIMULTANEOUSLY to utilize CPU 100%
 
+
+### Acknowledgement
+I would like to thank to two of these pre-trained generative chat AI algorithm for assisting me on this project
+- [ChatGPT](chat.openai.com)
+- [Bard](bard.google.com)
+
+And also to my friends and family, I would never forget you.
+
+
 ## REQUIREMENT / DEPENDENCIES
 - ffmpeg 6, MUST accessible thru PATH. (Automated installation within this script will be added later on version 4, hopefully)
 - python, MUST accessible in PATH
